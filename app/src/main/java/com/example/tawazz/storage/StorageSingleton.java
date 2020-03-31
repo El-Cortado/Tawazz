@@ -9,7 +9,7 @@ public class StorageSingleton {
     public static Storage getInstance() {
         if (sInstance == null) {
             FirebaseStorage storage = FirebaseStorage.getInstance();
-            sInstance = new Storage(storage.getReference(), new UploadFinishedWaiterFactory());
+            sInstance = new Storage(storage.getReference(), new UploadFinishedWaiterFactory(), mDownloadInvoker);
         }
         return sInstance;
     }

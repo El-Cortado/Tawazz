@@ -27,9 +27,12 @@ public class Database {
         getUserDatabaseRef(user).child(Constants.USER_ID_DATABASE_KEY).setValue(user.getId().toString());
     }
 
+    public DatabaseReference getDatabase() {
+        return mDatabase;
+    }
+
     private DatabaseReference getUserDatabaseRef(User user) {
         return mDatabase.child(Constants.ROOMS_DATABASE_KEY).child(user.getGroupId().toString())
                 .child(Constants.USERS_DATABASE_KEY).child(user.getId().toString());
     }
-
 }
