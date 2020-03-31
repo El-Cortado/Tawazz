@@ -1,4 +1,4 @@
-package com.example.tawazz.client;
+package com.example.tawazz.icon;
 
 import android.net.Uri;
 

@@ -13,12 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.tawazz.R;
-import com.example.tawazz.client.Icon;
 import com.example.tawazz.client.User;
-import com.example.tawazz.communication.ServerCommunicator;
-import com.example.tawazz.communication.exceptions.FailedSignInUserException;
 import com.example.tawazz.consts.Constants;
 import com.example.tawazz.database.Database;
+import com.example.tawazz.icon.Icon;
+import com.example.tawazz.icon.IconRepository;
+import com.example.tawazz.icon.exceptions.FailedUpdateUserIconException;
 import com.example.tawazz.storage.Storage;
 import com.example.tawazz.storage.StorageSingleton;
 import com.example.tawazz.touch.TouchListener;
@@ -58,14 +58,14 @@ public class RaffleRoom extends Fragment {
             Database database = new Database(databaseRef);
             database.addUser(user);
 
-            Storage storage = StorageSingleton.getInstance();
-            ServerCommunicator serverCommunicator = new ServerCommunicator(database, storage, user);
-            serverCommunicator.signInUser();
+            Storage storage = StorageSingleton.getInstance(getContext());
+            IconRepository iconRepository = new IconRepository(storage);
+            iconRepository.addUserIcon(user);
 
-            statusNotifier.register(new TouchStatusObserver(serverCommunicator));
+            statusNotifier.register(new TouchStatusObserver(database, user));
             userIconLayout.setOnTouchListener(new TouchListener(userIconImage, statusNotifier));
 
-        } catch (FailedSignInUserException e) {
+        } catch (FailedUpdateUserIconException e) {
             Log.e(Constants.TAWAZZ_LOG_TAG, "Failed Init Application", e);
         }
     }

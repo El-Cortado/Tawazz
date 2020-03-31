@@ -1,4 +1,4 @@
-package com.example.tawazz.communication.exceptions;
+package com.example.tawazz.touch.exceptions;
 
 public class FailedUpdatingServerException extends Exception {
     public FailedUpdatingServerException() {

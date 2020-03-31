@@ -1,5 +1,7 @@
 package com.example.tawazz.client;
 
+import com.example.tawazz.icon.Icon;
+
 import java.util.UUID;
 
 public class User {

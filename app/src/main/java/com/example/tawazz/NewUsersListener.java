@@ -3,7 +3,8 @@ package com.example.tawazz;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.tawazz.communication.ServerCommunicator;
+import com.example.tawazz.icon.Icon;
+import com.example.tawazz.icon.IconRepository;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -11,16 +12,18 @@ import com.google.firebase.database.DatabaseError;
 import java.util.UUID;
 
 public class NewUsersListener implements ChildEventListener {
-    private ServerCommunicator mServerCommunicator;
+    private IconRepository mIconRepository;
 
-    public NewUsersListener(ServerCommunicator mServerCommunicator) {
-        this.mServerCommunicator = mServerCommunicator;
+    public NewUsersListener(IconRepository mIconRepository) {
+        this.mIconRepository = mIconRepository;
     }
 
     @Override
     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
         UUID userId = UUID.fromString(dataSnapshot.getKey());
-        mServerCommunicator.downloadUserIcon(userId);
+        Icon newUserIcon = mIconRepository.getUserIcon(userId);
+
+        // add listener to that user (through the firebase database)
     }
 
     @Override

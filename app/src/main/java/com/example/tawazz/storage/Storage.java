@@ -36,7 +36,7 @@ public class Storage {
         }
     }
 
-    public void get(final Uri storedDataUri, final String fileName, final ExtensionType extensionType, final Uri desDir) {
+    public Uri get(final Uri storedDataUri, final String fileName, final ExtensionType extensionType, final Uri desDir) {
         StorageReference ref = mStorageReference.child(storedDataUri.getPath());
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -44,5 +44,7 @@ public class Storage {
                 mDownloadInvoker.downloadUriFiles(fileName, extensionType.toString(), desDir.getPath(), uri);
             }
         });
+
+        return Uri.parse(desDir.toString() + "/" + fileName + extensionType.toString());
     }
 }
