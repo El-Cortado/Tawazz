@@ -12,8 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.tawazz.NewUserListener;
 import com.example.tawazz.R;
-import com.example.tawazz.client.User;
+import com.example.tawazz.task.TaskSuccessfulWaiterFactory;
+import com.example.tawazz.user.User;
 import com.example.tawazz.consts.Constants;
 import com.example.tawazz.database.Database;
 import com.example.tawazz.icon.Icon;
@@ -47,7 +49,7 @@ public class RaffleRoom extends Fragment {
             // todo: all the user uuid will be saved in the db
             UUID groupUuid = UUID.randomUUID();
 
-            // todo: getting a picture from the user
+            // todo: getting a picture from the user (now this is a static pic)
             Uri iconUri = Uri.parse("android.resource://com.example.tawazz/drawable/albert_einstein");
             User user = new User(groupUuid, new Icon(iconUri));
             user.generateId();
@@ -59,11 +61,18 @@ public class RaffleRoom extends Fragment {
             database.addUser(user);
 
             Storage storage = StorageSingleton.getInstance(getContext());
-            IconRepository iconRepository = new IconRepository(storage);
+            IconRepository iconRepository = new IconRepository(storage, new TaskSuccessfulWaiterFactory());
             iconRepository.addUserIcon(user);
+
+            databaseRef.child(Constants.ROOMS_DATABASE_KEY).
+                    child(groupUuid.toString()).
+                    child(Constants.USERS_DATABASE_KEY).getRef().addChildEventListener(
+                    new NewUserListener(new IconRepository(storage, new TaskSuccessfulWaiterFactory()))
+            );
 
             statusNotifier.register(new TouchStatusObserver(database, user));
             userIconLayout.setOnTouchListener(new TouchListener(userIconImage, statusNotifier));
+
 
         } catch (FailedUpdateUserIconException e) {
             Log.e(Constants.TAWAZZ_LOG_TAG, "Failed Init Application", e);

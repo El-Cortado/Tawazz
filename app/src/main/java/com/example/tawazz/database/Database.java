@@ -2,7 +2,7 @@ package com.example.tawazz.database;
 
 import android.graphics.Point;
 
-import com.example.tawazz.client.User;
+import com.example.tawazz.user.User;
 import com.example.tawazz.consts.Constants;
 import com.example.tawazz.touch.TouchAction;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +27,7 @@ public class Database {
         getUserDatabaseRef(user).child(Constants.USER_ID_DATABASE_KEY).setValue(user.getId().toString());
     }
 
-    public DatabaseReference getDatabase() {
+    public DatabaseReference getDatabaseRef() {
         return mDatabase;
     }
 

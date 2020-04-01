@@ -5,7 +5,7 @@ import android.net.Uri;
 import com.example.tawazz.download.DownloadInvoker;
 import com.example.tawazz.download.ExtensionType;
 import com.example.tawazz.storage.exceptions.FailedStoreException;
-import com.example.tawazz.upload.UploadFinishedWaiterFactory;
+import com.example.tawazz.task.TaskSuccessfulWaiterFactory;
 import com.example.tawazz.utils.FailedWaitingForCondition;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
@@ -13,12 +13,12 @@ import com.google.firebase.storage.UploadTask;
 
 public class Storage {
     private StorageReference mStorageReference;
-    private UploadFinishedWaiterFactory mUploadFinishedWaiterFactory;
+    private TaskSuccessfulWaiterFactory mTaskSuccessfulWaiterFactory;
     private DownloadInvoker mDownloadInvoker;
 
-    public Storage(StorageReference storageReference, UploadFinishedWaiterFactory uploadFinishedWaiterFactory, DownloadInvoker mDownloadInvoker) {
+    public Storage(StorageReference storageReference, TaskSuccessfulWaiterFactory taskSuccessfulWaiterFactory, DownloadInvoker mDownloadInvoker) {
         this.mStorageReference = storageReference;
-        this.mUploadFinishedWaiterFactory = uploadFinishedWaiterFactory;
+        this.mTaskSuccessfulWaiterFactory = taskSuccessfulWaiterFactory;
         this.mDownloadInvoker = mDownloadInvoker;
     }
 
@@ -30,7 +30,7 @@ public class Storage {
     public void safeStore(Uri srcDir, Uri destDir) throws FailedStoreException {
         try {
             UploadTask uploadTask = store(srcDir, destDir);
-            mUploadFinishedWaiterFactory.create(uploadTask).waitTill();
+            mTaskSuccessfulWaiterFactory.create(uploadTask).waitTill();
         } catch (FailedWaitingForCondition e) {
             throw new FailedStoreException(e);
         }
@@ -46,5 +46,9 @@ public class Storage {
         });
 
         return Uri.parse(desDir.toString() + "/" + fileName + extensionType.toString());
+    }
+
+    public StorageReference getmStorageReference() {
+        return mStorageReference;
     }
 }

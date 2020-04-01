@@ -3,7 +3,7 @@ package com.example.tawazz.storage;
 import android.content.Context;
 
 import com.example.tawazz.download.DownloadInvoker;
-import com.example.tawazz.upload.UploadFinishedWaiterFactory;
+import com.example.tawazz.task.TaskSuccessfulWaiterFactory;
 import com.google.firebase.storage.FirebaseStorage;
 
 public class StorageSingleton {
@@ -13,7 +13,7 @@ public class StorageSingleton {
         if (sInstance == null) {
             FirebaseStorage storage = FirebaseStorage.getInstance();
             DownloadInvoker downloadInvoker = new DownloadInvoker(context);
-            sInstance = new Storage(storage.getReference(), new UploadFinishedWaiterFactory(), downloadInvoker);
+            sInstance = new Storage(storage.getReference(), new TaskSuccessfulWaiterFactory(), downloadInvoker);
         }
         return sInstance;
     }

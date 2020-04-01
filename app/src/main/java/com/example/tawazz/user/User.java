@@ -1,4 +1,4 @@
-package com.example.tawazz.client;
+package com.example.tawazz.user;
 
 import com.example.tawazz.icon.Icon;
 

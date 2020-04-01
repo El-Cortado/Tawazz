@@ -11,10 +11,10 @@ import com.google.firebase.database.DatabaseError;
 
 import java.util.UUID;
 
-public class NewUsersListener implements ChildEventListener {
+public class NewUserListener implements ChildEventListener {
     private IconRepository mIconRepository;
 
-    public NewUsersListener(IconRepository mIconRepository) {
+    public NewUserListener(IconRepository mIconRepository) {
         this.mIconRepository = mIconRepository;
     }
 

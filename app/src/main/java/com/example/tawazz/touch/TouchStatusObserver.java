@@ -2,7 +2,7 @@ package com.example.tawazz.touch;
 
 import android.util.Log;
 
-import com.example.tawazz.client.User;
+import com.example.tawazz.user.User;
 import com.example.tawazz.consts.Constants;
 import com.example.tawazz.database.Database;
 import com.example.tawazz.touch.exceptions.FailedUpdatingServerException;
