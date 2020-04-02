@@ -4,19 +4,18 @@ import android.util.Log;
 
 import com.example.tawazz.user.User;
 import com.example.tawazz.consts.Constants;
-import com.example.tawazz.database.Database;
 import com.example.tawazz.touch.exceptions.FailedUpdatingServerException;
 
 import java.util.Observable;
 import java.util.Observer;
 
 public class TouchStatusObserver implements Observer {
-    private Database mDatabase;
     private User mUser;
+    private TouchUpdater mTouchUpdater;
 
-    public TouchStatusObserver(Database mDatabase, User mUser) {
-        this.mDatabase = mDatabase;
+    public TouchStatusObserver(User mUser, TouchUpdater mTouchUpdater) {
         this.mUser = mUser;
+        this.mTouchUpdater = mTouchUpdater;
     }
 
     @Override
@@ -30,8 +29,8 @@ public class TouchStatusObserver implements Observer {
     }
 
     private void updateTouchStatus(TouchStatus touchStatus) throws FailedUpdatingServerException {
-        mDatabase.updateTouchLocation(touchStatus.getmLocation(), mUser);
-        mDatabase.updateTouchAction(touchStatus.getTouchAction(), mUser);
+        mTouchUpdater.updateTouchLocation(touchStatus.getmLocation(), mUser);
+        mTouchUpdater.updateTouchAction(touchStatus.getTouchAction(), mUser);
     }
 
 }

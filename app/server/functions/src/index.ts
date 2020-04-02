@@ -18,7 +18,7 @@ export const helloWorld = functions.https.onRequest((request, response) => {
     response.send("Hello from Firebase!");
 });
 
-export const userSignIn = functions.database.ref('rooms/{roomId}/users/{userId}/touch_action/')
+export const userTouching = functions.database.ref('rooms/{roomId}/users/{userId}/touch_action/')
     .onWrite(async (change, context) => {
       console.log('User ID', context.params.userId);
       touchingUsersIds.push(context.params.userId);

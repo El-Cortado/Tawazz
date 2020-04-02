@@ -1,36 +1,47 @@
 package com.example.tawazz.storage;
 
 import android.net.Uri;
+import android.util.Log;
 
+import com.example.tawazz.consts.Constants;
 import com.example.tawazz.download.DownloadInvoker;
 import com.example.tawazz.download.ExtensionType;
 import com.example.tawazz.storage.exceptions.FailedStoreException;
-import com.example.tawazz.task.TaskSuccessfulWaiterFactory;
+import com.example.tawazz.task.TaskCompletedWaiterFactory;
 import com.example.tawazz.utils.FailedWaitingForCondition;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class Storage {
     private StorageReference mStorageReference;
-    private TaskSuccessfulWaiterFactory mTaskSuccessfulWaiterFactory;
+    private TaskCompletedWaiterFactory mTaskCompletedWaiterFactory;
     private DownloadInvoker mDownloadInvoker;
 
-    public Storage(StorageReference storageReference, TaskSuccessfulWaiterFactory taskSuccessfulWaiterFactory, DownloadInvoker mDownloadInvoker) {
+    public Storage(StorageReference storageReference, TaskCompletedWaiterFactory taskCompletedWaiterFactory, DownloadInvoker mDownloadInvoker) {
         this.mStorageReference = storageReference;
-        this.mTaskSuccessfulWaiterFactory = taskSuccessfulWaiterFactory;
+        this.mTaskCompletedWaiterFactory = taskCompletedWaiterFactory;
         this.mDownloadInvoker = mDownloadInvoker;
     }
 
     public UploadTask store(Uri srcDir, Uri destDir) {
         StorageReference userIconStorageRef = mStorageReference.child(destDir.getPath());
-        return userIconStorageRef.putFile(srcDir);
+        try {
+            FileInputStream fileInputStream = new FileInputStream(srcDir.getPath());
+            return userIconStorageRef.putStream(fileInputStream);
+        } catch (FileNotFoundException e) {
+            Log.e(Constants.TAWAZZ_LOG_TAG, "", e);
+            return null;
+        }
     }
 
     public void safeStore(Uri srcDir, Uri destDir) throws FailedStoreException {
         try {
             UploadTask uploadTask = store(srcDir, destDir);
-            mTaskSuccessfulWaiterFactory.create(uploadTask).waitTill();
+            mTaskCompletedWaiterFactory.create(uploadTask).waitTill();
         } catch (FailedWaitingForCondition e) {
             throw new FailedStoreException(e);
         }

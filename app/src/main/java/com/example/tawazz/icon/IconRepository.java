@@ -3,7 +3,7 @@ package com.example.tawazz.icon;
 import android.net.Uri;
 
 import com.example.tawazz.icon.exceptions.FailedGettingAllExistingIcons;
-import com.example.tawazz.task.TaskSuccessfulWaiterFactory;
+import com.example.tawazz.task.TaskCompletedWaiterFactory;
 import com.example.tawazz.user.User;
 import com.example.tawazz.consts.Constants;
 import com.example.tawazz.download.ExtensionType;
@@ -24,11 +24,11 @@ public class IconRepository {
     private static String USER_ICON_DIR_PATH = "android.resource://com.example.tawazz/drawable";
 
     private Storage mStorage;
-    private TaskSuccessfulWaiterFactory mTaskSuccessfulWaiterFactory;
+    private TaskCompletedWaiterFactory mTaskCompletedWaiterFactory;
 
-    public IconRepository(Storage mStorage, TaskSuccessfulWaiterFactory mTaskSuccessfulWaiterFactory) {
+    public IconRepository(Storage mStorage, TaskCompletedWaiterFactory mTaskCompletedWaiterFactory) {
         this.mStorage = mStorage;
-        this.mTaskSuccessfulWaiterFactory = mTaskSuccessfulWaiterFactory;
+        this.mTaskCompletedWaiterFactory = mTaskCompletedWaiterFactory;
     }
 
     public Icon getUserIcon(UUID userUuid) {
@@ -52,7 +52,7 @@ public class IconRepository {
                 }
             });
 
-            mTaskSuccessfulWaiterFactory.create(listAllTask).waitTill();
+            mTaskCompletedWaiterFactory.create(listAllTask).waitTill();
             return icons;
         } catch (FailedWaitingForCondition e) {
             throw new FailedGettingAllExistingIcons(e);
