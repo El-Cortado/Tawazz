@@ -1,8 +1,5 @@
 package com.example.tawazz.task;
 
-import android.util.Log;
-
-import com.example.tawazz.consts.Constants;
 import com.example.tawazz.utils.Condition;
 import com.google.android.gms.tasks.Task;
 
@@ -15,8 +12,6 @@ public class IsTaskCompletedCondition implements Condition {
 
     @Override
     public boolean isConfirmed() {
-        Boolean b = task.isComplete();
-        Log.d(Constants.TAWAZZ_LOG_TAG, Boolean.toString(b));
-        return b;
+        return task.isComplete();
     }
 }

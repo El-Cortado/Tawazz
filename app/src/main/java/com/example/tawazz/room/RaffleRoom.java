@@ -16,7 +16,6 @@ import com.example.tawazz.R;
 import com.example.tawazz.consts.Constants;
 import com.example.tawazz.database.Database;
 import com.example.tawazz.database.ReadableDatabase;
-import com.example.tawazz.database.exceptions.FailedGettingAllDocsException;
 import com.example.tawazz.icon.Icon;
 import com.example.tawazz.icon.IconRepository;
 import com.example.tawazz.icon.exceptions.FailedUpdateUserIconException;
@@ -32,14 +31,12 @@ import com.example.tawazz.user.NewUserListener;
 import com.example.tawazz.user.SignedUsersSingleton;
 import com.example.tawazz.user.User;
 import com.example.tawazz.user.UserRepository;
-import com.example.tawazz.user.exceptions.UserAlreadyExistException;
 import com.example.tawazz.utils.Notifier;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 public class RaffleRoom extends Fragment {
@@ -57,7 +54,9 @@ public class RaffleRoom extends Fragment {
             ImageView userIconImage = userIconLayout.findViewById(R.id.albert_einstein);
 
             // todo: all the user uuid will be saved in the db
-            UUID roomUuid = UUID.randomUUID();
+//            UUID roomUuid = UUID.randomUUID();
+            String roomUuidString = "0633c074-a68a-4cdd-9864-f9b1e761e304";
+            UUID roomUuid = UUID.fromString(roomUuidString);
 
             // todo: getting a picture from the user (now this is a static pic)
             Uri iconUri = Uri.parse("android.resource://com.example.tawazz/drawable/albert_einstein");
@@ -86,9 +85,9 @@ public class RaffleRoom extends Fragment {
             );
 
             ReadableDatabase readableDatabase = new ReadableDatabase(FirebaseFirestore.getInstance());
-            UserRepository userRepository = new UserRepository(new HashMap<UUID, User>(), database, readableDatabase);
+            UserRepository userRepository = new UserRepository(new HashMap<UUID, User>(), database, readableDatabase, newUserHandler);
 
-            initAlreadySignedUsers(roomUuid, userRepository, newUserHandler);
+            initAlreadySignedUsers(roomUuid, userRepository);
 
             userRepository.add(user);
 
@@ -97,17 +96,13 @@ public class RaffleRoom extends Fragment {
             userIconLayout.setOnTouchListener(new TouchListener(userIconImage, statusNotifier));
 
 
-        } catch (UserAlreadyExistException | FailedGettingAllDocsException | FailedUpdateUserIconException e) {
+        } catch (FailedUpdateUserIconException e) {
             Log.e(Constants.TAWAZZ_LOG_TAG, "Failed Init Application", e);
         }
     }
 
     private void initAlreadySignedUsers(
-            UUID roomId, UserRepository userRepository, NewUserHandler newUserHandler) throws FailedGettingAllDocsException {
-        List<UUID> signedUsersIds = userRepository.getAllRoomUsers(roomId);
-
-        for (UUID userId : signedUsersIds) {
-            newUserHandler.handle(userId);
-        }
+            UUID roomId, UserRepository userRepository) {
+        userRepository.initAllRoomUsers(roomId);
     }
 }

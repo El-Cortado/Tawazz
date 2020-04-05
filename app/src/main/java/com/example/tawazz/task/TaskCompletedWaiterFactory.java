@@ -7,4 +7,5 @@ public class TaskCompletedWaiterFactory {
     public ConditionalWaiter create(Task task) {
         return new ConditionalWaiter(new IsTaskCompletedCondition(task));
     }
+
 }

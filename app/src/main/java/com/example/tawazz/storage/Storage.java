@@ -1,9 +1,7 @@
 package com.example.tawazz.storage;
 
 import android.net.Uri;
-import android.util.Log;
 
-import com.example.tawazz.consts.Constants;
 import com.example.tawazz.download.DownloadInvoker;
 import com.example.tawazz.download.ExtensionType;
 import com.example.tawazz.storage.exceptions.FailedStoreException;
@@ -12,9 +10,6 @@ import com.example.tawazz.utils.FailedWaitingForCondition;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class Storage {
     private StorageReference mStorageReference;
@@ -27,15 +22,9 @@ public class Storage {
         this.mDownloadInvoker = mDownloadInvoker;
     }
 
-    public UploadTask store(Uri srcDir, Uri destDir) {
+    public UploadTask store(Uri srcDir, Uri destDir) throws FailedStoreException {
         StorageReference userIconStorageRef = mStorageReference.child(destDir.getPath());
-        try {
-            FileInputStream fileInputStream = new FileInputStream(srcDir.getPath());
-            return userIconStorageRef.putStream(fileInputStream);
-        } catch (FileNotFoundException e) {
-            Log.e(Constants.TAWAZZ_LOG_TAG, "", e);
-            return null;
-        }
+        return userIconStorageRef.putFile(srcDir);
     }
 
     public void safeStore(Uri srcDir, Uri destDir) throws FailedStoreException {
@@ -59,7 +48,7 @@ public class Storage {
         return Uri.parse(desDir.toString() + "/" + fileName + extensionType.toString());
     }
 
-    public StorageReference getmStorageReference() {
+    public StorageReference getStorageReference() {
         return mStorageReference;
     }
 }
