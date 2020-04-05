@@ -6,7 +6,7 @@ import com.example.tawazz.download.DownloadInvoker;
 import com.example.tawazz.download.ExtensionType;
 import com.example.tawazz.storage.exceptions.FailedStoreException;
 import com.example.tawazz.task.TaskCompletedWaiterFactory;
-import com.example.tawazz.utils.FailedWaitingForCondition;
+import com.example.tawazz.utils.exceptions.FailedWaitingForCondition;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;

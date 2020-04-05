@@ -3,6 +3,7 @@ package com.example.tawazz.user;
 import com.example.tawazz.consts.Constants;
 import com.example.tawazz.database.Database;
 import com.example.tawazz.database.ReadableDatabase;
+import com.example.tawazz.database.UsersDatabaseUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,11 +17,13 @@ public class UserRepository {
     private NewUserHandler mNewUserHandler;
     private Database mDatabase;
     private ReadableDatabase mReadableDatabase;
+    private UsersDatabaseUtils mUsersDatabaseUtils;
 
-    public UserRepository(Map<UUID, User> mUsers, Database mDatabase, ReadableDatabase mReadableDatabase, NewUserHandler mNewUserHandler) {
+    public UserRepository(Database mDatabase, ReadableDatabase mReadableDatabase, NewUserHandler mNewUserHandler, UsersDatabaseUtils mUsersDatabaseUtils) {
         this.mNewUserHandler = mNewUserHandler;
         this.mDatabase = mDatabase;
         this.mReadableDatabase = mReadableDatabase;
+        this.mUsersDatabaseUtils = mUsersDatabaseUtils;
     }
 
     public void add(User user) {
@@ -37,18 +40,6 @@ public class UserRepository {
     }
 
     public void updateUserField(User user, String field, Object object) {
-        mDatabase.addToDatabase(object, getUserDatabasePath(user), field);
+        mDatabase.addToDatabase(object, mUsersDatabaseUtils.getUserDatabasePath(user), field);
     }
-
-    private String getUserDatabasePath(User user) {
-        return getRoomPath(user) + "/" +
-                Constants.USERS_DATABASE_KEY + "/" +
-                user.getId().toString();
-    }
-
-    private String getRoomPath(User user) {
-        return Constants.ROOMS_DATABASE_KEY + "/" +
-                user.getRoomId().toString();
-    }
-
 }

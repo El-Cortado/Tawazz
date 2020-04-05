@@ -16,16 +16,20 @@ import com.example.tawazz.R;
 import com.example.tawazz.consts.Constants;
 import com.example.tawazz.database.Database;
 import com.example.tawazz.database.ReadableDatabase;
+import com.example.tawazz.database.UsersDatabaseUtils;
 import com.example.tawazz.icon.Icon;
 import com.example.tawazz.icon.IconRepository;
 import com.example.tawazz.icon.exceptions.FailedUpdateUserIconException;
 import com.example.tawazz.storage.Storage;
 import com.example.tawazz.storage.StorageSingleton;
 import com.example.tawazz.task.TaskCompletedWaiterFactory;
+import com.example.tawazz.touch.DatabaseTouchStatusConverter;
 import com.example.tawazz.touch.TouchListener;
 import com.example.tawazz.touch.TouchStatus;
 import com.example.tawazz.touch.TouchStatusObserver;
 import com.example.tawazz.touch.TouchUpdater;
+import com.example.tawazz.touch.remote.RemoteTouchHandlerFactory;
+import com.example.tawazz.touch.remote.RemoteTouchListener;
 import com.example.tawazz.user.NewUserHandler;
 import com.example.tawazz.user.NewUserListener;
 import com.example.tawazz.user.SignedUsersSingleton;
@@ -36,7 +40,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class RaffleRoom extends Fragment {
@@ -72,12 +75,14 @@ public class RaffleRoom extends Fragment {
             IconRepository iconRepository = new IconRepository(storage, new TaskCompletedWaiterFactory());
             iconRepository.addUserIcon(user);
 
+            UsersDatabaseUtils usersDatabaseUtils = new UsersDatabaseUtils();
+            DatabaseTouchStatusConverter databaseTouchStatusConverter = new DatabaseTouchStatusConverter();
+
             NewUserHandler newUserHandler = new NewUserHandler(
                     new IconRepository(storage, new TaskCompletedWaiterFactory()),
                     SignedUsersSingleton.getInstance(),
-                    user
-                    );
-
+                    user,
+                    new RemoteTouchListener(database, databaseTouchStatusConverter, usersDatabaseUtils), new RemoteTouchHandlerFactory());
             databaseRef.child(Constants.ROOMS_DATABASE_KEY).
                     child(roomUuid.toString()).
                     child(Constants.USERS_DATABASE_KEY).getRef().addChildEventListener(
@@ -85,7 +90,7 @@ public class RaffleRoom extends Fragment {
             );
 
             ReadableDatabase readableDatabase = new ReadableDatabase(FirebaseFirestore.getInstance());
-            UserRepository userRepository = new UserRepository(new HashMap<UUID, User>(), database, readableDatabase, newUserHandler);
+            UserRepository userRepository = new UserRepository(database, readableDatabase, newUserHandler, usersDatabaseUtils);
 
             initAlreadySignedUsers(roomUuid, userRepository);
 

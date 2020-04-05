@@ -1,4 +1,4 @@
-package com.example.tawazz.utils;
+package com.example.tawazz.utils.exceptions;
 
 public class FailedWaitingForCondition extends Throwable {
     public FailedWaitingForCondition() {
