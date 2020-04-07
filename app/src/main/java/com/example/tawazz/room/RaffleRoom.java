@@ -101,6 +101,9 @@ public class RaffleRoom extends Fragment {
 
             TouchUpdater touchUpdater = new TouchUpdater(userRepository);
             statusNotifier.register(new TouchStatusObserver(user, touchUpdater));
+            userIconImage.setImageResource(R.drawable.albert_einstein);
+            userIconImage.setVisibility(View.GONE);
+
             TouchStatusHandler touchListenerHandler = new TouchStatusHandler(userIconImage, statusNotifier);
             userIconLayout.setOnTouchListener(new TouchListener(touchListenerHandler));
 

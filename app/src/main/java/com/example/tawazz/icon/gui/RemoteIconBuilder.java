@@ -1,22 +1,20 @@
 package com.example.tawazz.icon.gui;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.tawazz.R;
-import com.example.tawazz.consts.Constants;
 import com.example.tawazz.icon.IconsDatabaseUtils;
 import com.example.tawazz.storage.Storage;
 
 import java.util.UUID;
 
 public class RemoteIconBuilder {
+    private static final int ICON_LAYOUT_SIZE = 200;
+
     private Context mContext;
     private View view;
     private Storage mStorage;
@@ -30,19 +28,13 @@ public class RemoteIconBuilder {
     }
 
     public ImageView build(UUID userUuid) {
-        Log.d(Constants.TAWAZZ_LOG_TAG, "------------------------------------------------");
-
         ImageView imageView = new ImageView(mContext);
-        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(100, 100);
-//        params.gravity = Gravity.TOP;
-
+        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ICON_LAYOUT_SIZE, ICON_LAYOUT_SIZE);
         imageView.setLayoutParams(params);
-//        view.findViewById(R.id.albert_einstein);
         LinearLayout linearLayout = view.findViewById(R.id.user_icon_layout);
         linearLayout.addView(imageView);
 
         mStorage.loadImageInto(mIconsDatabaseUtils.getIconDir(userUuid), imageView, mContext);
-        //        Uri iconUri = mStorage.get(getIconDir(userUuid), userUuid.toString(), ExtensionType.JPG, Uri.parse(USER_ICON_DIR_PATH));
 
         return imageView;
     }

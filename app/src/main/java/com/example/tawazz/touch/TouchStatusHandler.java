@@ -36,7 +36,6 @@ public class TouchStatusHandler implements Handler<TouchStatus> {
             case DOWN:
                 mImageView.setVisibility(View.VISIBLE);
                 updatedPoint = updateImageLocation(touchStatus.getmLocation());
-                mImageView.setImageResource(R.drawable.albert_einstein);
 
                 mNotifierTouchStatus.notify(
                         new TouchStatus(updatedPoint, TouchAction.DOWN));
@@ -45,7 +44,6 @@ public class TouchStatusHandler implements Handler<TouchStatus> {
             case MOVE:
                 mImageView.setVisibility(View.VISIBLE);
                 updatedPoint = updateImageLocation(touchStatus.getmLocation());
-                mImageView.setImageResource(R.drawable.albert_einstein);
 
                 mNotifierTouchStatus.notify(
                         new TouchStatus(updatedPoint, TouchAction.MOVE));

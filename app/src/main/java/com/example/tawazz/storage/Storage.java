@@ -10,6 +10,7 @@ import com.example.tawazz.download.ExtensionType;
 import com.example.tawazz.storage.exceptions.FailedStoreException;
 import com.example.tawazz.task.TaskCompletedWaiterFactory;
 import com.example.tawazz.utils.exceptions.FailedWaitingForCondition;
+import com.example.tawazz.utils.firebase.GlideApp;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -52,7 +53,7 @@ public class Storage {
 //    }
 
     public void loadImageInto(Uri imageUri, ImageView imageView, Context context) {
-        Glide.with(context).load(mStorageReference.child(imageUri.getPath())).into(imageView);
+        GlideApp.with(context).load(mStorageReference.child(imageUri.getPath())).into(imageView);
     }
 
 }
