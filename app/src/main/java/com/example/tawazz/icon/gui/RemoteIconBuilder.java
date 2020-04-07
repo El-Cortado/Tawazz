@@ -10,18 +10,18 @@ import com.example.tawazz.storage.Storage;
 
 import java.util.UUID;
 
-public class RemoteIconGenerator {
+public class RemoteIconBuilder {
     private Context mContext;
     private Storage mStorage;
     private IconsDatabaseUtils mIconsDatabaseUtils;
 
-    public RemoteIconGenerator(Context mContext, Storage mStorage, IconsDatabaseUtils mIconsDatabaseUtils) {
+    public RemoteIconBuilder(Context mContext, Storage mStorage, IconsDatabaseUtils mIconsDatabaseUtils) {
         this.mContext = mContext;
         this.mStorage = mStorage;
         this.mIconsDatabaseUtils = mIconsDatabaseUtils;
     }
 
-    public ImageView getUserIcon(UUID userUuid) {
+    public ImageView build(UUID userUuid) {
         Log.d(Constants.TAWAZZ_LOG_TAG, "------------------------------------------------");
 
         ImageView imageView = new ImageView(mContext);

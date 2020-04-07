@@ -1,19 +1,17 @@
 package com.example.tawazz.touch.remote;
 
-import android.content.Context;
-import android.widget.ImageView;
-
+import com.example.tawazz.icon.gui.RemoteIconBuilder;
 import com.example.tawazz.touch.TouchStatusHandler;
 import com.example.tawazz.user.User;
 
 public class RemoteTouchHandlerFactory {
-    private Context mContext;
+    private RemoteIconBuilder mRemoteIconBuilder;
 
-    public RemoteTouchHandlerFactory(Context context) {
-        this.mContext = context;
+    public RemoteTouchHandlerFactory(RemoteIconBuilder mRemoteIconBuilder) {
+        this.mRemoteIconBuilder = mRemoteIconBuilder;
     }
 
-    public TouchStatusHandler create(ImageView imageView) {
-        return new TouchStatusHandler(imageView);
+    public TouchStatusHandler create(User user) {
+        return new TouchStatusHandler(mRemoteIconBuilder.build(user.getId()));
     }
 }

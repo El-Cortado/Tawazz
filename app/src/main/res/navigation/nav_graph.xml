@@ -45,6 +45,15 @@
         <action
             android:id="@+id/action_newRoomCreation_to_menuFragment"
             app:destination="@id/menuFragment" />
+        <action
+            android:name="createNewRoomAction"
+            android:id="@+id/action_newRoomCreation_to_raffleRoom"
+            app:destination="@id/raffleRoom">
+            <argument
+                android:name="room_id"
+                app:argType="string"
+            />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/raffleRoom"

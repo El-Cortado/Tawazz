@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.tawazz.R;
+import com.example.tawazz.user.User;
 import com.example.tawazz.utils.Handler;
 import com.example.tawazz.utils.Notifier;
 
@@ -17,8 +18,8 @@ public class TouchStatusHandler implements Handler<TouchStatus> {
         this.mNotifierTouchStatus = mNotifierTouchStatus;
     }
 
-    public TouchStatusHandler(ImageView mImageView) {
-        this.mImageView = mImageView;
+    public TouchStatusHandler(ImageView imageView) {
+        this.mImageView = imageView;
         this.mNotifierTouchStatus = new Notifier<>();
     }
 

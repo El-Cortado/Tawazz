@@ -21,7 +21,7 @@ import com.example.tawazz.icon.Icon;
 import com.example.tawazz.icon.IconRepository;
 import com.example.tawazz.icon.IconsDatabaseUtils;
 import com.example.tawazz.icon.exceptions.FailedUpdateUserIconException;
-import com.example.tawazz.icon.gui.RemoteIconGenerator;
+import com.example.tawazz.icon.gui.RemoteIconBuilder;
 import com.example.tawazz.storage.Storage;
 import com.example.tawazz.storage.StorageSingleton;
 import com.example.tawazz.touch.DatabaseTouchStatusConverter;
@@ -84,8 +84,8 @@ public class RaffleRoom extends Fragment {
                     SignedUsersSingleton.getInstance(),
                     user,
                     new RemoteTouchListener(database, databaseTouchStatusConverter, usersDatabaseUtils),
-                    new RemoteTouchHandlerFactory(getContext()),
-                    new RemoteIconGenerator(getContext(), storage, iconsDatabaseUtils));
+                    new RemoteTouchHandlerFactory(new RemoteIconBuilder(getContext(), storage, iconsDatabaseUtils)),
+                    new RemoteIconBuilder(getContext(), storage, iconsDatabaseUtils));
             databaseRef.child(Constants.ROOMS_DATABASE_KEY).
                     child(roomUuid.toString()).
                     child(Constants.USERS_DATABASE_KEY).getRef().addChildEventListener(
