@@ -1,7 +1,10 @@
 package com.example.tawazz.storage;
 
+import android.content.Context;
 import android.net.Uri;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.tawazz.download.DownloadInvoker;
 import com.example.tawazz.download.ExtensionType;
 import com.example.tawazz.storage.exceptions.FailedStoreException;
@@ -36,19 +39,20 @@ public class Storage {
         }
     }
 
-    public Uri get(final Uri storedDataUri, final String fileName, final ExtensionType extensionType, final Uri desDir) {
-        StorageReference ref = mStorageReference.child(storedDataUri.getPath());
-        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                mDownloadInvoker.downloadUriFiles(fileName, extensionType.toString(), desDir.getPath(), uri);
-            }
-        });
+//    public Uri get(final Uri storedDataUri, final String fileName, final ExtensionType extensionType, final Uri desDir) {
+//        StorageReference ref = mStorageReference.child(storedDataUri.getPath());
+//        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                mDownloadInvoker.downloadUriFiles(fileName, extensionType.toString(), desDir.getPath(), uri);
+//            }
+//        });
+//
+//        return Uri.parse(desDir.toString() + "/" + fileName + extensionType.toString());
+//    }
 
-        return Uri.parse(desDir.toString() + "/" + fileName + extensionType.toString());
+    public void loadImageInto(Uri uri, ImageView imageView, Context context) {
+        Glide.with(context).load(mStorageReference.child(uri.getPath())).into(imageView);
     }
 
-    public StorageReference getStorageReference() {
-        return mStorageReference;
-    }
 }

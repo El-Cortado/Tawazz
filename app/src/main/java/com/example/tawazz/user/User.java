@@ -9,6 +9,11 @@ public class User {
     private UUID mRoomId;
     private Icon mIcon;
 
+    public User(UUID id, UUID mRoomId) {
+        this.mRoomId = mRoomId;
+        this.mId = id;
+    }
+
     public User(UUID mRoomId, Icon mIcon) {
         this.mRoomId = mRoomId;
         this.mIcon = mIcon;

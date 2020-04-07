@@ -1,8 +1,12 @@
 package com.example.tawazz.database;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
+import com.example.tawazz.consts.Constants;
 import com.example.tawazz.utils.Handler;
+import com.example.tawazz.utils.exceptions.FailedConvertingObjectException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +30,11 @@ public class Database {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                handler.handle(databaseDataConvertor.convert(dataSnapshot));
+                try {
+                    handler.handle(databaseDataConvertor.convert(dataSnapshot));
+                } catch (FailedConvertingObjectException e) {
+                    Log.e(Constants.TAWAZZ_LOG_TAG, "Failed Converting data from snapshot", e);
+                }
             }
 
             @Override

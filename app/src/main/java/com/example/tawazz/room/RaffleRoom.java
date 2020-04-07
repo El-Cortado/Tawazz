@@ -19,13 +19,15 @@ import com.example.tawazz.database.ReadableDatabase;
 import com.example.tawazz.database.UsersDatabaseUtils;
 import com.example.tawazz.icon.Icon;
 import com.example.tawazz.icon.IconRepository;
+import com.example.tawazz.icon.IconsDatabaseUtils;
 import com.example.tawazz.icon.exceptions.FailedUpdateUserIconException;
+import com.example.tawazz.icon.gui.RemoteIconGenerator;
 import com.example.tawazz.storage.Storage;
 import com.example.tawazz.storage.StorageSingleton;
-import com.example.tawazz.task.TaskCompletedWaiterFactory;
 import com.example.tawazz.touch.DatabaseTouchStatusConverter;
 import com.example.tawazz.touch.TouchListener;
 import com.example.tawazz.touch.TouchStatus;
+import com.example.tawazz.touch.TouchStatusHandler;
 import com.example.tawazz.touch.TouchStatusObserver;
 import com.example.tawazz.touch.TouchUpdater;
 import com.example.tawazz.touch.remote.RemoteTouchHandlerFactory;
@@ -67,22 +69,23 @@ public class RaffleRoom extends Fragment {
             user.generateId();
             Notifier<TouchStatus> statusNotifier = new Notifier<>();
 
-            DatabaseReference databaseRef;
-            databaseRef = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
             Database database = new Database(databaseRef);
 
             Storage storage = StorageSingleton.getInstance(getContext());
-            IconRepository iconRepository = new IconRepository(storage, new TaskCompletedWaiterFactory());
+            IconsDatabaseUtils iconsDatabaseUtils = new IconsDatabaseUtils();
+            IconRepository iconRepository = new IconRepository(iconsDatabaseUtils, storage);
             iconRepository.addUserIcon(user);
 
             UsersDatabaseUtils usersDatabaseUtils = new UsersDatabaseUtils();
             DatabaseTouchStatusConverter databaseTouchStatusConverter = new DatabaseTouchStatusConverter();
 
             NewUserHandler newUserHandler = new NewUserHandler(
-                    new IconRepository(storage, new TaskCompletedWaiterFactory()),
                     SignedUsersSingleton.getInstance(),
                     user,
-                    new RemoteTouchListener(database, databaseTouchStatusConverter, usersDatabaseUtils), new RemoteTouchHandlerFactory());
+                    new RemoteTouchListener(database, databaseTouchStatusConverter, usersDatabaseUtils),
+                    new RemoteTouchHandlerFactory(getContext()),
+                    new RemoteIconGenerator(getContext(), storage, iconsDatabaseUtils));
             databaseRef.child(Constants.ROOMS_DATABASE_KEY).
                     child(roomUuid.toString()).
                     child(Constants.USERS_DATABASE_KEY).getRef().addChildEventListener(
@@ -98,7 +101,8 @@ public class RaffleRoom extends Fragment {
 
             TouchUpdater touchUpdater = new TouchUpdater(userRepository);
             statusNotifier.register(new TouchStatusObserver(user, touchUpdater));
-            userIconLayout.setOnTouchListener(new TouchListener(userIconImage, statusNotifier));
+            TouchStatusHandler touchListenerHandler = new TouchStatusHandler(userIconImage, statusNotifier);
+            userIconLayout.setOnTouchListener(new TouchListener(touchListenerHandler));
 
 
         } catch (FailedUpdateUserIconException e) {
