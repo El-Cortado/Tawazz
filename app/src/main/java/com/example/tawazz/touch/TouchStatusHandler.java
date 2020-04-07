@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.tawazz.R;
-import com.example.tawazz.user.User;
 import com.example.tawazz.utils.Handler;
 import com.example.tawazz.utils.Notifier;
 
@@ -44,6 +43,7 @@ public class TouchStatusHandler implements Handler<TouchStatus> {
 
                 break;
             case MOVE:
+                mImageView.setVisibility(View.VISIBLE);
                 updatedPoint = updateImageLocation(touchStatus.getmLocation());
                 mImageView.setImageResource(R.drawable.albert_einstein);
 

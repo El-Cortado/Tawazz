@@ -84,8 +84,8 @@ public class RaffleRoom extends Fragment {
                     SignedUsersSingleton.getInstance(),
                     user,
                     new RemoteTouchListener(database, databaseTouchStatusConverter, usersDatabaseUtils),
-                    new RemoteTouchHandlerFactory(new RemoteIconBuilder(getContext(), storage, iconsDatabaseUtils)),
-                    new RemoteIconBuilder(getContext(), storage, iconsDatabaseUtils));
+                    new RemoteTouchHandlerFactory(new RemoteIconBuilder(getContext(), view, storage, iconsDatabaseUtils)),
+                    new RemoteIconBuilder(getContext(), view, storage, iconsDatabaseUtils));
             databaseRef.child(Constants.ROOMS_DATABASE_KEY).
                     child(roomUuid.toString()).
                     child(Constants.USERS_DATABASE_KEY).getRef().addChildEventListener(

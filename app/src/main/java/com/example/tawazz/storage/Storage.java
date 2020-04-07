@@ -51,8 +51,8 @@ public class Storage {
 //        return Uri.parse(desDir.toString() + "/" + fileName + extensionType.toString());
 //    }
 
-    public void loadImageInto(Uri uri, ImageView imageView, Context context) {
-        Glide.with(context).load(mStorageReference.child(uri.getPath())).into(imageView);
+    public void loadImageInto(Uri imageUri, ImageView imageView, Context context) {
+        Glide.with(context).load(mStorageReference.child(imageUri.getPath())).into(imageView);
     }
 
 }
