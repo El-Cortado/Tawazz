@@ -23,42 +23,37 @@ public class TouchStatusHandler implements Handler<TouchStatus> {
     }
 
     public void handle(TouchStatus touchStatus) {
-        Point updatedPoint;
 
         switch (touchStatus.getTouchAction()) {
             case UP:
                 mImageView.setVisibility(View.GONE);
-                updatedPoint = updateImageLocation(touchStatus.getmLocation());
+                updateImageLocation(touchStatus.getmLocation());
 
                 mNotifierTouchStatus.notify(
-                        new TouchStatus(updatedPoint, TouchAction.UP));
+                        new TouchStatus(touchStatus.getmLocation(), TouchAction.UP));
                 break;
             case DOWN:
                 mImageView.setVisibility(View.VISIBLE);
-                updatedPoint = updateImageLocation(touchStatus.getmLocation());
+                updateImageLocation(touchStatus.getmLocation());
 
                 mNotifierTouchStatus.notify(
-                        new TouchStatus(updatedPoint, TouchAction.DOWN));
+                        new TouchStatus(touchStatus.getmLocation(), TouchAction.DOWN));
 
                 break;
             case MOVE:
                 mImageView.setVisibility(View.VISIBLE);
-                updatedPoint = updateImageLocation(touchStatus.getmLocation());
+                updateImageLocation(touchStatus.getmLocation());
 
                 mNotifierTouchStatus.notify(
-                        new TouchStatus(updatedPoint, TouchAction.MOVE));
+                        new TouchStatus(touchStatus.getmLocation(), TouchAction.MOVE));
                 break;
         }
 
     }
 
-    private Point updateImageLocation(Point point) {
-        int width = point.x - 200;
-        int height = point.y - 200;
-        mImageView.setX(width);
-        mImageView.setY(height);
-
-        return new Point(width, height);
+    private void updateImageLocation(Point point) {
+        mImageView.setX(point.x);
+        mImageView.setY(point.y);
     }
 
 }

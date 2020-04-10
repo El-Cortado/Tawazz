@@ -30,7 +30,15 @@ public class TouchListener implements View.OnTouchListener {
             default :
                 return v.onTouchEvent(event);
         }
-        mTouchStatusHandler.handle(new TouchStatus(eventLocation, touchAction));
+        mTouchStatusHandler.handle(new TouchStatus(getUpdatedImageLocation(eventLocation), touchAction));
         return true;
     }
+
+    private Point getUpdatedImageLocation(Point point) {
+        int width = point.x - 200;
+        int height = point.y - 200;
+
+        return new Point(width, height);
+    }
+
 }
