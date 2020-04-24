@@ -9,8 +9,8 @@ public class User {
     private UUID mRoomId;
     private Icon mIcon;
 
-    public User(UUID id, UUID mRoomId) {
-        this.mRoomId = mRoomId;
+    public User(UUID id, UUID roomId) {
+        this.mRoomId = roomId;
         this.mId = id;
     }
 

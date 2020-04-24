@@ -17,14 +17,13 @@ public class IconRepository {
     private IconsDatabaseUtils mIconsDatabaseUtils;
     private Storage mStorage;
 
-    public IconRepository(IconsDatabaseUtils mIconsDatabaseUtils, Storage mStorage) {
-        this.mIconsDatabaseUtils = mIconsDatabaseUtils;
-        this.mStorage = mStorage;
+    public IconRepository(IconsDatabaseUtils iconsDatabaseUtils, Storage storage) {
+        this.mIconsDatabaseUtils = iconsDatabaseUtils;
+        this.mStorage = storage;
     }
 
     public void addUserIcon(User user) throws FailedUpdateUserIconException {
         try {
-            Log.d(Constants.TAWAZZ_LOG_TAG, "------------------------------------------------");
             mStorage.safeStore(user.getIcon().getIconPath(), mIconsDatabaseUtils.getIconDir(user.getId()));
         } catch (FailedStoreException e) {
             throw new FailedUpdateUserIconException(e);

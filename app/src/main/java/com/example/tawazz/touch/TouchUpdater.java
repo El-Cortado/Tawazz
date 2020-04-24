@@ -9,8 +9,8 @@ import com.example.tawazz.user.UserRepository;
 public class TouchUpdater {
     private UserRepository mUserRepository;
 
-    public TouchUpdater(UserRepository mUserRepository) {
-        this.mUserRepository = mUserRepository;
+    public TouchUpdater(UserRepository userRepository) {
+        this.mUserRepository = userRepository;
     }
 
     public void updateTouchLocation(Point newLocation, User user) {

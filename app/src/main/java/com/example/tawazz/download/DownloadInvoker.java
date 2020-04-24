@@ -8,8 +8,8 @@ import android.net.Uri;
 public class DownloadInvoker {
     private Context mContext;
 
-    public DownloadInvoker(Context mContext) {
-        this.mContext = mContext;
+    public DownloadInvoker(Context context) {
+        this.mContext = context;
     }
 
     public void downloadUriFiles(String filename, String fileExtension, String destinationDir, Uri url) {

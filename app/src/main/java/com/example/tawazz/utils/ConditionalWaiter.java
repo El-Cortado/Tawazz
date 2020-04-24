@@ -1,6 +1,6 @@
 package com.example.tawazz.utils;
 
-import com.example.tawazz.utils.exceptions.FailedWaitingForCondition;
+import com.example.tawazz.utils.exceptions.FailedWaitingForConditionException;
 
 import java.util.concurrent.TimeoutException;
 
@@ -10,11 +10,11 @@ public class ConditionalWaiter {
 
     private final Condition mCondition;
 
-    public ConditionalWaiter(Condition mCondition) {
-        this.mCondition = mCondition;
+    public ConditionalWaiter(Condition condition) {
+        this.mCondition = condition;
     }
 
-    public void waitTill(int timeout) throws FailedWaitingForCondition {
+    public void waitTill(int timeout) throws FailedWaitingForConditionException {
         long startingTime = System.currentTimeMillis();
         while (!mCondition.isConfirmed()) {
             try {
@@ -24,12 +24,12 @@ public class ConditionalWaiter {
 
                 Thread.sleep(INTERVAL_MS);
             } catch (InterruptedException | TimeoutException e) {
-                throw new FailedWaitingForCondition(e);
+                throw new FailedWaitingForConditionException(e);
             }
         }
     }
 
-    public void waitTill() throws FailedWaitingForCondition {
+    public void waitTill() throws FailedWaitingForConditionException {
         waitTill(DEFAULT_TIMEOUT_MS);
     }
 

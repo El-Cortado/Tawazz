@@ -8,8 +8,8 @@ public class NavigationOnClickListener implements View.OnClickListener {
     private NavController mNavController;
     private int actionId;
 
-    public NavigationOnClickListener(NavController mNavController, int actionId) {
-        this.mNavController = mNavController;
+    public NavigationOnClickListener(NavController navController, int actionId) {
+        this.mNavController = navController;
         this.actionId = actionId;
     }
 

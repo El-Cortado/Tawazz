@@ -11,10 +11,10 @@ public class RemoteTouchListener {
     private DatabaseTouchStatusConverter mDatabaseTouchStatusConverter;
     private UsersDatabaseUtils mUsersDatabaseUtils;
 
-    public RemoteTouchListener(Database mDatabase, DatabaseTouchStatusConverter mDatabaseTouchStatusConverter, UsersDatabaseUtils mUsersDatabaseUtils) {
-        this.mDatabase = mDatabase;
-        this.mDatabaseTouchStatusConverter = mDatabaseTouchStatusConverter;
-        this.mUsersDatabaseUtils = mUsersDatabaseUtils;
+    public RemoteTouchListener(Database database, DatabaseTouchStatusConverter databaseTouchStatusConverter, UsersDatabaseUtils usersDatabaseUtils) {
+        this.mDatabase = database;
+        this.mDatabaseTouchStatusConverter = databaseTouchStatusConverter;
+        this.mUsersDatabaseUtils = usersDatabaseUtils;
     }
 
     public void addUserTouchListener(User user, Handler handler) {

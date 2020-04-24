@@ -13,10 +13,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 public class Database {
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseReference;
 
-    public Database(DatabaseReference mDatabase) {
-        this.mDatabase = mDatabase;
+    public Database(DatabaseReference databaseReference) {
+        this.mDatabaseReference = databaseReference;
     }
 
     public void addToDatabase(Object value, String ...path) {
@@ -45,7 +45,7 @@ public class Database {
     }
 
     private DatabaseReference getPathRef(String ...path) {
-        DatabaseReference ref = mDatabase;
+        DatabaseReference ref = mDatabaseReference;
         for (String pathParts: path) {
             ref = ref.child(pathParts);
         }

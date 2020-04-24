@@ -7,8 +7,8 @@ import android.view.View;
 public class TouchListener implements View.OnTouchListener {
     private  TouchStatusHandler mTouchStatusHandler;
 
-    public TouchListener(TouchStatusHandler mTouchStatusHandler) {
-        this.mTouchStatusHandler = mTouchStatusHandler;
+    public TouchListener(TouchStatusHandler touchStatusHandler) {
+        this.mTouchStatusHandler = touchStatusHandler;
     }
 
     @Override

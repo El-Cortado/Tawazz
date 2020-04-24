@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private static String DEBUG_TAG = "TAWWAZZ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

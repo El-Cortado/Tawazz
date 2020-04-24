@@ -12,9 +12,9 @@ public class TouchStatusHandler implements Handler<TouchStatus> {
     private ImageView mImageView;
     private Notifier<TouchStatus> mNotifierTouchStatus;
 
-    public TouchStatusHandler(ImageView mImageView, Notifier<TouchStatus> mNotifierTouchStatus) {
-        this.mImageView = mImageView;
-        this.mNotifierTouchStatus = mNotifierTouchStatus;
+    public TouchStatusHandler(ImageView imageView, Notifier<TouchStatus> notifierTouchStatus) {
+        this.mImageView = imageView;
+        this.mNotifierTouchStatus = notifierTouchStatus;
     }
 
     public TouchStatusHandler(ImageView imageView) {

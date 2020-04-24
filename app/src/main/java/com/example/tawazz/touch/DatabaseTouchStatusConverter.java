@@ -11,7 +11,6 @@ import com.google.firebase.database.DataSnapshot;
 public class DatabaseTouchStatusConverter implements DatabaseDataConvertor {
     @Override
     public Object convert(DataSnapshot dataSnapshot) throws FailedConvertingObjectException {
-        Log.d(Constants.TAWAZZ_LOG_TAG, "-------------------------   CONVERT   -------------------------");
         Iterable<DataSnapshot> userData = dataSnapshot.getChildren();
         Point touchLocation = new Point();
         TouchAction touchAction = null;
@@ -19,23 +18,18 @@ public class DatabaseTouchStatusConverter implements DatabaseDataConvertor {
             switch (item.getKey()) {
                 case Constants.HEIGHT_DATABASE_KEY:
                     touchLocation.y = ((Long)item.getValue()).intValue();
-                    Log.d(Constants.TAWAZZ_LOG_TAG, "-------------------------   CONVERT   -------------------------");
                     Log.d(Constants.TAWAZZ_LOG_TAG, String.valueOf(touchLocation.y));
                     break;
                 case Constants.WIDTH_DATABASE_KEY:
                     touchLocation.x = ((Long) item.getValue()).intValue();
-                    Log.d(Constants.TAWAZZ_LOG_TAG, "-------------------------   CONVERT   -------------------------");
                     Log.d(Constants.TAWAZZ_LOG_TAG, String.valueOf(touchLocation.x));
 
                     break;
                 case Constants.TOUCH_ACTION_DATABASE_KEY:
                     touchAction = TouchAction.valueOf((String)item.getValue());
-                    Log.d(Constants.TAWAZZ_LOG_TAG, "-------------------------   CONVERT   -------------------------");
                     Log.d(Constants.TAWAZZ_LOG_TAG, touchAction.name());
 
                     break;
-                default:
-                    continue;
             }
         }
 

@@ -12,8 +12,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class ReadableDatabase {
     private FirebaseFirestore mFirebaseFirestore;
 
-    public ReadableDatabase(FirebaseFirestore mFirebaseFirestore) {
-        this.mFirebaseFirestore = mFirebaseFirestore;
+    public ReadableDatabase(FirebaseFirestore firebaseFirestore) {
+        this.mFirebaseFirestore = firebaseFirestore;
     }
 
     public CollectionReference getCollection(String collectionName) {

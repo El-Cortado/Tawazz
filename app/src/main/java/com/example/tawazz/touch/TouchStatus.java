@@ -6,9 +6,9 @@ public class TouchStatus {
     private Point mLocation;
     private TouchAction mTouchAction;
 
-    public TouchStatus(Point location, TouchAction mTouchAction) {
-        this.mTouchAction = mTouchAction;
+    public TouchStatus(Point location, TouchAction touchAction) {
         this.mLocation = location;
+        this.mTouchAction = touchAction;
     }
 
     public Point getmLocation() {

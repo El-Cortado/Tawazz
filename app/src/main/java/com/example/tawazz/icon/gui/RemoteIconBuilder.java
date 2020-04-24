@@ -20,11 +20,11 @@ public class RemoteIconBuilder {
     private Storage mStorage;
     private IconsDatabaseUtils mIconsDatabaseUtils;
 
-    public RemoteIconBuilder(Context mContext, View view, Storage mStorage, IconsDatabaseUtils mIconsDatabaseUtils) {
-        this.mContext = mContext;
+    public RemoteIconBuilder(Context context, View view, Storage storage, IconsDatabaseUtils iconsDatabaseUtils) {
+        this.mContext = context;
         this.view = view;
-        this.mStorage = mStorage;
-        this.mIconsDatabaseUtils = mIconsDatabaseUtils;
+        this.mStorage = storage;
+        this.mIconsDatabaseUtils = iconsDatabaseUtils;
     }
 
     public ImageView build(UUID userUuid) {

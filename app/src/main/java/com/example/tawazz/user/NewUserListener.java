@@ -16,8 +16,8 @@ import java.util.UUID;
 public class NewUserListener implements ChildEventListener {
     private NewUserHandler mNewUserHandler;
 
-    public NewUserListener(NewUserHandler mNewUserHandler) {
-        this.mNewUserHandler = mNewUserHandler;
+    public NewUserListener(NewUserHandler newUserHandler) {
+        this.mNewUserHandler = newUserHandler;
     }
 
     @Override

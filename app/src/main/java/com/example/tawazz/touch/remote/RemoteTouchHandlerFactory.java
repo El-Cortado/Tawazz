@@ -7,8 +7,8 @@ import com.example.tawazz.user.User;
 public class RemoteTouchHandlerFactory {
     private RemoteIconBuilder mRemoteIconBuilder;
 
-    public RemoteTouchHandlerFactory(RemoteIconBuilder mRemoteIconBuilder) {
-        this.mRemoteIconBuilder = mRemoteIconBuilder;
+    public RemoteTouchHandlerFactory(RemoteIconBuilder remoteIconBuilder) {
+        this.mRemoteIconBuilder = remoteIconBuilder;
     }
 
     public TouchStatusHandler create(User user) {

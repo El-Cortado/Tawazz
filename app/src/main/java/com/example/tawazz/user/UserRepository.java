@@ -19,11 +19,11 @@ public class UserRepository {
     private ReadableDatabase mReadableDatabase;
     private UsersDatabaseUtils mUsersDatabaseUtils;
 
-    public UserRepository(Database mDatabase, ReadableDatabase mReadableDatabase, NewUserHandler mNewUserHandler, UsersDatabaseUtils mUsersDatabaseUtils) {
-        this.mNewUserHandler = mNewUserHandler;
-        this.mDatabase = mDatabase;
-        this.mReadableDatabase = mReadableDatabase;
-        this.mUsersDatabaseUtils = mUsersDatabaseUtils;
+    public UserRepository(Database database, ReadableDatabase readableDatabase, NewUserHandler newUserHandler, UsersDatabaseUtils usersDatabaseUtils) {
+        this.mNewUserHandler = newUserHandler;
+        this.mDatabase = database;
+        this.mReadableDatabase = readableDatabase;
+        this.mUsersDatabaseUtils = usersDatabaseUtils;
     }
 
     public void add(User user) {

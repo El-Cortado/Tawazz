@@ -12,9 +12,9 @@ public class TouchStatusObserver implements Observer {
     private User mUser;
     private TouchUpdater mTouchUpdater;
 
-    public TouchStatusObserver(User mUser, TouchUpdater mTouchUpdater) {
-        this.mUser = mUser;
-        this.mTouchUpdater = mTouchUpdater;
+    public TouchStatusObserver(User user, TouchUpdater touchUpdater) {
+        this.mUser = user;
+        this.mTouchUpdater = touchUpdater;
     }
 
     @Override

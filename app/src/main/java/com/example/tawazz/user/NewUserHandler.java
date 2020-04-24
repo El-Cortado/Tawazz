@@ -18,12 +18,12 @@ public class NewUserHandler implements DocHandler {
     private RemoteTouchHandlerFactory mRemoteTouchHandlerFactory;
     private RemoteIconBuilder mRemoteIconBuilder;
 
-    public NewUserHandler(Map<UUID, User> mSignedInUsers, User mLocalUser, RemoteTouchListener mRemoteTouchListener, RemoteTouchHandlerFactory mRemoteTouchHandlerFactory, RemoteIconBuilder mRemoteIconBuilder) {
-        this.mSignedInUsers = mSignedInUsers;
-        this.mLocalUser = mLocalUser;
-        this.mRemoteTouchListener = mRemoteTouchListener;
-        this.mRemoteTouchHandlerFactory = mRemoteTouchHandlerFactory;
-        this.mRemoteIconBuilder = mRemoteIconBuilder;
+    public NewUserHandler(Map<UUID, User> signedInUsers, User localUser, RemoteTouchListener remoteTouchListener, RemoteTouchHandlerFactory remoteTouchHandlerFactory, RemoteIconBuilder remoteIconBuilder) {
+        this.mSignedInUsers = signedInUsers;
+        this.mLocalUser = localUser;
+        this.mRemoteTouchListener = remoteTouchListener;
+        this.mRemoteTouchHandlerFactory = remoteTouchHandlerFactory;
+        this.mRemoteIconBuilder = remoteIconBuilder;
     }
 
     @Override
