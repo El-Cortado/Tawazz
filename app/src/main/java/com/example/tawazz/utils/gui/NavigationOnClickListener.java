@@ -3,18 +3,19 @@ package com.example.tawazz.utils.gui;
 import android.view.View;
 
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 
 public class NavigationOnClickListener implements View.OnClickListener {
     private NavController mNavController;
-    private int actionId;
+    private NavDirections mNavDirections;
 
-    public NavigationOnClickListener(NavController navController, int actionId) {
+    public NavigationOnClickListener(NavController navController, NavDirections navDirections) {
         this.mNavController = navController;
-        this.actionId = actionId;
+        this.mNavDirections = navDirections;
     }
 
     @Override
     public void onClick(View v) {
-        mNavController.navigate(actionId);
+        mNavController.navigate(mNavDirections);
     }
 }

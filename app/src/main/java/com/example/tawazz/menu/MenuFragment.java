@@ -29,10 +29,10 @@ public class MenuFragment extends Fragment {
 
         NavController navController = Navigation.findNavController(view);
         buttonJoinGroup.setOnClickListener(
-                new NavigationOnClickListener(navController, R.id.action_menuFragment_to_joinRoom));
+                new NavigationOnClickListener(navController, MenuFragmentDirections.actionMenuFragmentToJoinRoom()));
 
         Button buttonCreateRoom = view.findViewById(R.id.createRoomButton);
         buttonCreateRoom.setOnClickListener(
-                new NavigationOnClickListener(navController, R.id.action_menuFragment_to_newRoomCreation));
+                new NavigationOnClickListener(navController, MenuFragmentDirections.actionMenuFragmentToNewRoomCreation()));
     }
 }

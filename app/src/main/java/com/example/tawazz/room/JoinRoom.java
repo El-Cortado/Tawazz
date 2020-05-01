@@ -15,6 +15,8 @@ import androidx.navigation.Navigation;
 import com.example.tawazz.R;
 import com.example.tawazz.utils.gui.NavigationOnClickListener;
 
+import java.util.UUID;
+
 public class JoinRoom extends Fragment {
     public JoinRoom() {}
 
@@ -26,11 +28,13 @@ public class JoinRoom extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        UUID roomId = UUID.randomUUID(); // get from textbox
+
         Button buttonJoinGroup = view.findViewById(R.id.joinButton);
 
         NavController navController = Navigation.findNavController(view);
         buttonJoinGroup.setOnClickListener(
-                new NavigationOnClickListener(navController, R.id.action_joinRoom_to_raffleRoom));
+                new NavigationOnClickListener(navController, JoinRoomDirections.actionJoinRoomToRaffleRoom(roomId.toString())));
 
     }
 }

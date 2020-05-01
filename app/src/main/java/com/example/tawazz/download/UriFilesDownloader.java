@@ -5,10 +5,10 @@ import android.content.Context;
 import android.net.Uri;
 
 
-public class DownloadInvoker {
+public class UriFilesDownloader {
     private Context mContext;
 
-    public DownloadInvoker(Context context) {
+    public UriFilesDownloader(Context context) {
         this.mContext = context;
     }
 

@@ -35,10 +35,9 @@ public class NewRoomCreation extends Fragment {
         Button buttonCreate = view.findViewById(R.id.createButton);
 
         NavController navController = Navigation.findNavController(view);
-
-//      CreateNewRoomAction createNewRoomAction = new CreateNewRoomAction();
+        NewRoomCreationDirections.ActionNewRoomCreationToRaffleRoom createNewRoomAction = NewRoomCreationDirections.actionNewRoomCreationToRaffleRoom(roomId.toString());
         buttonCreate.setOnClickListener(
-                new NavigationOnClickListener(navController, R.id.action_joinRoom_to_raffleRoom));
+                new NavigationOnClickListener(navController, createNewRoomAction));
 
     }
 }

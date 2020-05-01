@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.widget.ImageView;
 
-import com.example.tawazz.download.DownloadInvoker;
+import com.example.tawazz.download.UriFilesDownloader;
 import com.example.tawazz.storage.exceptions.FailedStoreException;
 import com.example.tawazz.task.TaskCompletedWaiterFactory;
 import com.example.tawazz.utils.exceptions.FailedWaitingForConditionException;
@@ -15,12 +15,10 @@ import com.google.firebase.storage.UploadTask;
 public class Storage {
     private StorageReference mStorageReference;
     private TaskCompletedWaiterFactory mTaskCompletedWaiterFactory;
-    private DownloadInvoker mDownloadInvoker;
 
-    public Storage(StorageReference storageReference, TaskCompletedWaiterFactory taskCompletedWaiterFactory, DownloadInvoker mDownloadInvoker) {
+    public Storage(StorageReference storageReference, TaskCompletedWaiterFactory taskCompletedWaiterFactory) {
         this.mStorageReference = storageReference;
         this.mTaskCompletedWaiterFactory = taskCompletedWaiterFactory;
-        this.mDownloadInvoker = mDownloadInvoker;
     }
 
     public UploadTask store(Uri srcDir, Uri destDir) throws FailedStoreException {
@@ -37,16 +35,17 @@ public class Storage {
         }
     }
 
+//    (!) unused
 //    public Uri get(final Uri storedDataUri, final String fileName, final ExtensionType extensionType, final Uri desDir) {
 //        StorageReference ref = mStorageReference.child(storedDataUri.getPath());
 //        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 //            @Override
 //            public void onSuccess(Uri uri) {
-//                mDownloadInvoker.downloadUriFiles(fileName, extensionType.toString(), desDir.getPath(), uri);
+//                mDownloadInvoker.downloadUriFiles(fileName, extensionType.getExtensionName(), desDir.getPath(), uri);
 //            }
 //        });
 //
-//        return Uri.parse(desDir.toString() + "/" + fileName + extensionType.toString());
+//        return Uri.parse(desDir.toString() + "/" + fileName + extensionType.getExtensionName());
 //    }
 
     public void loadImageInto(Uri imageUri, ImageView imageView, Context context) {

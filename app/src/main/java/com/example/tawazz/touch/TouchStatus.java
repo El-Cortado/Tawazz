@@ -11,7 +11,7 @@ public class TouchStatus {
         this.mTouchAction = touchAction;
     }
 
-    public Point getmLocation() {
+    public Point getLocation() {
         return mLocation;
     }
 

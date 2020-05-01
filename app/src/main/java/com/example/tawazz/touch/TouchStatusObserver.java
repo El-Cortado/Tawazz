@@ -19,12 +19,11 @@ public class TouchStatusObserver implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        Log.e(Constants.TAWAZZ_LOG_TAG, "UPDATE");
         updateTouchStatus((TouchStatus) arg);
     }
 
     private void updateTouchStatus(TouchStatus touchStatus) {
-        mTouchUpdater.updateTouchLocation(touchStatus.getmLocation(), mUser);
+        mTouchUpdater.updateTouchLocation(touchStatus.getLocation(), mUser);
         mTouchUpdater.updateTouchAction(touchStatus.getTouchAction(), mUser);
     }
 

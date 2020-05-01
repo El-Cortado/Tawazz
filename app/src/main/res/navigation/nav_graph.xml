@@ -22,7 +22,7 @@
             android:name="CreateRoomAction"
             app:destination="@id/newRoomCreation"
             app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"></action>
+            app:exitAnim="@android:anim/fade_out"/>
 
     </fragment>
     <fragment
@@ -58,5 +58,12 @@
     <fragment
         android:id="@+id/raffleRoom"
         android:name="com.example.tawazz.room.RaffleRoom"
-        android:label="RaffleRoom" />
+        android:label="RaffleRoom">
+
+        <argument
+            android:name="room_id"
+            app:argType="string"
+            />
+    </fragment>
+
 </navigation>

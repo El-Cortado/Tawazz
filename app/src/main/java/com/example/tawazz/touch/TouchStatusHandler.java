@@ -4,7 +4,6 @@ import android.graphics.Point;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.tawazz.R;
 import com.example.tawazz.utils.Handler;
 import com.example.tawazz.utils.Notifier;
 
@@ -27,25 +26,25 @@ public class TouchStatusHandler implements Handler<TouchStatus> {
         switch (touchStatus.getTouchAction()) {
             case UP:
                 mImageView.setVisibility(View.GONE);
-                updateImageLocation(touchStatus.getmLocation());
+                updateImageLocation(touchStatus.getLocation());
 
                 mNotifierTouchStatus.notify(
-                        new TouchStatus(touchStatus.getmLocation(), TouchAction.UP));
+                        new TouchStatus(touchStatus.getLocation(), TouchAction.UP));
                 break;
             case DOWN:
                 mImageView.setVisibility(View.VISIBLE);
-                updateImageLocation(touchStatus.getmLocation());
+                updateImageLocation(touchStatus.getLocation());
 
                 mNotifierTouchStatus.notify(
-                        new TouchStatus(touchStatus.getmLocation(), TouchAction.DOWN));
+                        new TouchStatus(touchStatus.getLocation(), TouchAction.DOWN));
 
                 break;
             case MOVE:
                 mImageView.setVisibility(View.VISIBLE);
-                updateImageLocation(touchStatus.getmLocation());
+                updateImageLocation(touchStatus.getLocation());
 
                 mNotifierTouchStatus.notify(
-                        new TouchStatus(touchStatus.getmLocation(), TouchAction.MOVE));
+                        new TouchStatus(touchStatus.getLocation(), TouchAction.MOVE));
                 break;
         }
 
