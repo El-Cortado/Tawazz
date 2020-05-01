@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.tawazz.R;
 import com.example.tawazz.databinding.JoinRoomBinding;
+import com.example.tawazz.utils.Supplier;
 import com.example.tawazz.utils.gui.NavigationOnClickListener;
 
 import java.util.UUID;
@@ -37,8 +37,10 @@ public class JoinRoom extends Fragment {
         Button buttonJoinGroup = mBinding.joinButton;
 
         NavController navController = Navigation.findNavController(view);
+
+        JoinRoomToRaffleRoomSupplier joinRoomToRaffleRoomSupplier = new JoinRoomToRaffleRoomSupplier(mBinding);
         buttonJoinGroup.setOnClickListener(
-                new NavigationOnClickListener(navController, JoinRoomDirections.actionJoinRoomToRaffleRoom(roomId.toString())));
+                new NavigationOnClickListener(navController, joinRoomToRaffleRoomSupplier));
 
     }
 }

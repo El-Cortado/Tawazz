@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.tawazz.R;
 import com.example.tawazz.databinding.NewRoomCreationBinding;
 import com.example.tawazz.utils.gui.NavigationOnClickListener;
 

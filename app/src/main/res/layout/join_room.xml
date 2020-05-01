@@ -5,6 +5,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
 
+    <EditText
+        android:id="@+id/room_id_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Input Room Id"
+        />
+
     <Button
         android:id="@+id/joinButton"
         android:layout_width="match_parent"
