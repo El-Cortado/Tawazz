@@ -14,25 +14,30 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.tawazz.R;
+import com.example.tawazz.databinding.NewRoomCreationBinding;
 import com.example.tawazz.utils.gui.NavigationOnClickListener;
 
 import java.util.UUID;
 
 public class NewRoomCreation extends Fragment {
+
+    private NewRoomCreationBinding mBinding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.new_room_creation, container, false);
+        mBinding = NewRoomCreationBinding.inflate(inflater, container, false);
+        return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         UUID roomId = UUID.randomUUID();
 
-        TextView textView = view.findViewById(R.id.room_id);
+        TextView textView = mBinding.roomId;
         textView.setText(roomId.toString());
 
-        Button buttonCreate = view.findViewById(R.id.createButton);
+        Button buttonCreate = mBinding.createButton;
 
         NavController navController = Navigation.findNavController(view);
         NewRoomCreationDirections.ActionNewRoomCreationToRaffleRoom createNewRoomAction = NewRoomCreationDirections.actionNewRoomCreationToRaffleRoom(roomId.toString());

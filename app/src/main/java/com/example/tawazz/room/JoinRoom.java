@@ -13,24 +13,28 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.tawazz.R;
+import com.example.tawazz.databinding.JoinRoomBinding;
 import com.example.tawazz.utils.gui.NavigationOnClickListener;
 
 import java.util.UUID;
 
 public class JoinRoom extends Fragment {
+
+    private JoinRoomBinding mBinding;
     public JoinRoom() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.join_room, container, false);
+        mBinding = JoinRoomBinding.inflate(getLayoutInflater(), container, false);
+        return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         UUID roomId = UUID.randomUUID(); // get from textbox
 
-        Button buttonJoinGroup = view.findViewById(R.id.joinButton);
+        Button buttonJoinGroup = mBinding.joinButton;
 
         NavController navController = Navigation.findNavController(view);
         buttonJoinGroup.setOnClickListener(

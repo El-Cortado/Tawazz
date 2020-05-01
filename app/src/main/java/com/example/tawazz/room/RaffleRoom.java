@@ -17,6 +17,7 @@ import com.example.tawazz.consts.Constants;
 import com.example.tawazz.database.Database;
 import com.example.tawazz.database.ReadableDatabase;
 import com.example.tawazz.database.UsersDatabaseUtils;
+import com.example.tawazz.databinding.RaffleRoomBinding;
 import com.example.tawazz.icon.Icon;
 import com.example.tawazz.icon.IconRepository;
 import com.example.tawazz.icon.IconsDatabaseUtils;
@@ -46,21 +47,24 @@ import java.util.UUID;
 
 public class RaffleRoom extends Fragment {
 
+    private RaffleRoomBinding mBinding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.raffle_room, container, false);
+        mBinding = RaffleRoomBinding.inflate(inflater, container, false);
+        return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         try {
-            View userIconLayout = view.findViewById(R.id.user_icon_layout);
-            ImageView userIconImage = userIconLayout.findViewById(R.id.albert_einstein);
+            View userIconLayout = mBinding.userIconLayout;
+            ImageView userIconImage = mBinding.albertEinstein;
 
             // todo: all the user uuid will be saved in the db
-//            UUID roomUuid = UUID.randomUUID();
-            String roomUuidString = "0633c074-a68a-4cdd-9864-f9b1e761e304";
+            String roomUuidString = RaffleRoomArgs.fromBundle(getArguments()).getRoomId();
+//            String roomUuidString = "0633c074-a68a-4cdd-9864-f9b1e761e304";
             UUID roomUuid = UUID.fromString(roomUuidString);
 
             // todo: getting a picture from the user (now this is a static pic)
@@ -72,7 +76,7 @@ public class RaffleRoom extends Fragment {
             DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
             Database database = new Database(databaseRef);
 
-            Storage storage = StorageSingleton.getInstance(getContext());
+            Storage storage = StorageSingleton.getInstance();
             IconsDatabaseUtils iconsDatabaseUtils = new IconsDatabaseUtils();
             IconRepository iconRepository = new IconRepository(iconsDatabaseUtils, storage);
             iconRepository.addUserIcon(user);
@@ -84,8 +88,9 @@ public class RaffleRoom extends Fragment {
                     SignedUsersSingleton.getInstance(),
                     user,
                     new RemoteTouchListener(database, databaseTouchStatusConverter, usersDatabaseUtils),
-                    new RemoteTouchHandlerFactory(new RemoteIconBuilder(getContext(), view, storage, iconsDatabaseUtils)),
-                    new RemoteIconBuilder(getContext(), view, storage, iconsDatabaseUtils));
+                    new RemoteTouchHandlerFactory(
+                            new RemoteIconBuilder(getContext(), mBinding, storage, iconsDatabaseUtils)));
+
             databaseRef.child(Constants.ROOMS_DATABASE_KEY).
                     child(roomUuid.toString()).
                     child(Constants.USERS_DATABASE_KEY).getRef().addChildEventListener(
