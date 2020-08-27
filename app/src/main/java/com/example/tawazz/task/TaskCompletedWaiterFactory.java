@@ -1,6 +1,6 @@
 package com.example.tawazz.task;
 
-import com.example.tawazz.utils.ConditionalWaiter;
+import com.example.tawazz.utils.condition.ConditionalWaiter;
 import com.google.android.gms.tasks.Task;
 
 public class TaskCompletedWaiterFactory {

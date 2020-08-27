@@ -1,4 +1,4 @@
-package com.example.tawazz.utils;
+package com.example.tawazz.utils.supplier;
 
 import com.example.tawazz.utils.exceptions.SupplyingException;
 

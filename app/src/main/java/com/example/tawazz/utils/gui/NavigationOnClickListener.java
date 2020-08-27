@@ -5,8 +5,8 @@ import android.view.View;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 
-import com.example.tawazz.utils.Supplier;
-import com.example.tawazz.utils.ThrowingSupplier;
+import com.example.tawazz.utils.supplier.Supplier;
+import com.example.tawazz.utils.supplier.ThrowingSupplier;
 import com.example.tawazz.utils.exceptions.SupplyingException;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -34,8 +34,12 @@ public class NavigationOnClickListener implements View.OnClickListener {
         try {
             mNavController.navigate(mNavDirectionSupplier.supply());
         } catch (SupplyingException e) {
-            Snackbar mySnackbar = Snackbar.make(v, "Invalid Room Raffle Id", 5000);
+            Snackbar mySnackbar = Snackbar.make(v, e.getMessage(), 5000); // remove from here
             mySnackbar.show();
         }
+    }
+
+    public ThrowingSupplier<NavDirections> getNavDirectionSupplier() {
+        return mNavDirectionSupplier;
     }
 }

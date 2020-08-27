@@ -13,8 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.tawazz.database.ReadableDatabase;
 import com.example.tawazz.databinding.NewRoomCreationBinding;
 import com.example.tawazz.utils.gui.NavigationOnClickListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.UUID;
 
@@ -40,8 +42,10 @@ public class NewRoomCreation extends Fragment {
 
         NavController navController = Navigation.findNavController(view);
         NewRoomCreationDirections.ActionNewRoomCreationToRaffleRoom createNewRoomAction = NewRoomCreationDirections.actionNewRoomCreationToRaffleRoom(roomId.toString());
-        buttonCreate.setOnClickListener(
-                new NavigationOnClickListener(navController, createNewRoomAction));
+
+        ReadableDatabase readableDatabase = new ReadableDatabase(FirebaseFirestore.getInstance());
+        buttonCreate.setOnClickListener(new NewRoomCreationOnClickListener(readableDatabase,
+                new NavigationOnClickListener(navController, createNewRoomAction), roomId));
 
     }
 }

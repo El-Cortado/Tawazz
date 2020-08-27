@@ -12,9 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.tawazz.database.Database;
+import com.example.tawazz.database.ReadableDatabase;
 import com.example.tawazz.databinding.JoinRoomBinding;
-import com.example.tawazz.utils.Supplier;
+import com.example.tawazz.utils.Notifier;
 import com.example.tawazz.utils.gui.NavigationOnClickListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.UUID;
 
@@ -38,9 +43,12 @@ public class JoinRoom extends Fragment {
 
         NavController navController = Navigation.findNavController(view);
 
-        JoinRoomToRaffleRoomSupplier joinRoomToRaffleRoomSupplier = new JoinRoomToRaffleRoomSupplier(mBinding);
-        buttonJoinGroup.setOnClickListener(
-                new NavigationOnClickListener(navController, joinRoomToRaffleRoomSupplier));
+        ReadableDatabase readableDatabase = new ReadableDatabase(FirebaseFirestore.getInstance());
+        Notifier<Boolean> notifier = new Notifier<>();
 
+        JoinRoomToRaffleRoomSupplier joinRoomToRaffleRoomSupplier = new JoinRoomToRaffleRoomSupplier(mBinding);
+        notifier.register(new JoinRoomRequestObserver(view, new NavigationOnClickListener(navController, joinRoomToRaffleRoomSupplier)));
+
+        buttonJoinGroup.setOnClickListener(new JoinRoomOnClickListener(readableDatabase, notifier, roomId));
     }
 }

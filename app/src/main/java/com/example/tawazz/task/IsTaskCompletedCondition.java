@@ -1,6 +1,6 @@
 package com.example.tawazz.task;
 
-import com.example.tawazz.utils.Condition;
+import com.example.tawazz.utils.condition.Condition;
 import com.google.android.gms.tasks.Task;
 
 public class IsTaskCompletedCondition implements Condition {

@@ -1,4 +1,4 @@
-package com.example.tawazz.utils;
+package com.example.tawazz.utils.condition;
 
 import com.example.tawazz.utils.exceptions.FailedWaitingForConditionException;
 
