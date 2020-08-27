@@ -4,7 +4,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.net.Uri;
 
-
+// unused!
 public class UriFilesDownloader {
     private Context mContext;
 

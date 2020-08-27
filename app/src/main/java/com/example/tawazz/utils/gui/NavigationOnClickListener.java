@@ -6,12 +6,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 
 import com.example.tawazz.utils.Supplier;
+import com.example.tawazz.utils.ThrowingSupplier;
+import com.example.tawazz.utils.exceptions.SupplyingException;
+import com.google.android.material.snackbar.Snackbar;
 
 public class NavigationOnClickListener implements View.OnClickListener {
     private NavController mNavController;
-    private Supplier<NavDirections> mNavDirectionSupplier;
+    private ThrowingSupplier<NavDirections> mNavDirectionSupplier;
 
-    public NavigationOnClickListener(NavController navController, Supplier<NavDirections> mNavDirectionSupplier) {
+    public NavigationOnClickListener(NavController navController, ThrowingSupplier<NavDirections> mNavDirectionSupplier) {
         this.mNavController = navController;
         this.mNavDirectionSupplier = mNavDirectionSupplier;
     }
@@ -28,6 +31,11 @@ public class NavigationOnClickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        mNavController.navigate(mNavDirectionSupplier.supply());
+        try {
+            mNavController.navigate(mNavDirectionSupplier.supply());
+        } catch (SupplyingException e) {
+            Snackbar mySnackbar = Snackbar.make(v, "Invalid Room Raffle Id", 5000);
+            mySnackbar.show();
+        }
     }
 }

@@ -46,8 +46,8 @@ public class Database {
 
     private DatabaseReference getPathRef(String ...path) {
         DatabaseReference ref = mDatabaseReference;
-        for (String pathParts: path) {
-            ref = ref.child(pathParts);
+        for (String pathPart: path) {
+            ref = ref.child(pathPart);
         }
         return ref;
     }

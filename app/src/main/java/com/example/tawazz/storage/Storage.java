@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.widget.ImageView;
 
-import com.example.tawazz.download.UriFilesDownloader;
 import com.example.tawazz.storage.exceptions.FailedStoreException;
 import com.example.tawazz.task.TaskCompletedWaiterFactory;
 import com.example.tawazz.utils.exceptions.FailedWaitingForConditionException;

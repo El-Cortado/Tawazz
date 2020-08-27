@@ -2,18 +2,31 @@ package com.example.tawazz.room;
 
 import androidx.navigation.NavDirections;
 
+import com.example.tawazz.database.ReadableDatabase;
 import com.example.tawazz.databinding.JoinRoomBinding;
-import com.example.tawazz.utils.Supplier;
+import com.example.tawazz.utils.ThrowingSupplier;
+import com.example.tawazz.utils.exceptions.SupplyingException;
 
-public class JoinRoomToRaffleRoomSupplier implements Supplier<NavDirections> {
+import java.util.UUID;
+
+public class JoinRoomToRaffleRoomSupplier implements ThrowingSupplier<NavDirections> {
     private JoinRoomBinding mJoinRoomBinding;
+    private final ReadableDatabase readableDatabase;
 
-    public JoinRoomToRaffleRoomSupplier(JoinRoomBinding mJoinRoomBinding) {
+    public JoinRoomToRaffleRoomSupplier(JoinRoomBinding mJoinRoomBinding, ReadableDatabase readableDatabase) {
         this.mJoinRoomBinding = mJoinRoomBinding;
+        this.readableDatabase = readableDatabase;
     }
 
     @Override
-    public NavDirections supply() {
-        return JoinRoomDirections.actionJoinRoomToRaffleRoom(mJoinRoomBinding.roomIdInput.getText().toString());
+    public NavDirections supply() throws SupplyingException {
+        try {
+            UUID uuid = UUID.fromString(mJoinRoomBinding.roomIdInput.getText().toString());
+
+            return JoinRoomDirections.actionJoinRoomToRaffleRoom(uuid.toString());
+
+        } catch (Exception e) {
+            throw new SupplyingException(e);
+        }
     }
 }
