@@ -4,26 +4,26 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.tawazz.utils.condition.Condition;
-import com.example.tawazz.utils.condition.ConditionalWaiter;
-import com.example.tawazz.utils.exceptions.FailedWaitingForConditionException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QuerySnapshot;
 
+
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ReadableDatabase {
-    private FirebaseFirestore mFirebaseFirestore;
+    private Firestore mFirebaseFirestore;
 
-    public ReadableDatabase(FirebaseFirestore firebaseFirestore) {
+    public ReadableDatabase(Firestore firebaseFirestore) {
         this.mFirebaseFirestore = firebaseFirestore;
     }
 
-    public CollectionReference  getCollection(String collectionName) {
+    public CollectionReference getCollection(String collectionName) {
         return mFirebaseFirestore.collection(collectionName);
     }
 
@@ -32,21 +32,33 @@ public class ReadableDatabase {
     }
 
     public void handleAllThatEqualTo(String collectionName, final String field, Object equalTo, final DocHandler handler) {
+        ApiFuture<QuerySnapshot> querySnapshot = mFirebaseFirestore.collection(collectionName).whereEqualTo(field, equalTo).get();
+        try {
+            for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+                handler.handle(document.getData());
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-        final AtomicBoolean isEnd = new AtomicBoolean(false);
-        final Task task = mFirebaseFirestore.collection(collectionName).whereEqualTo(field, equalTo).get().addOnCompleteListener(
-            new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    Log.e("TAWAZZ", "----------------------------------------------------------------------");
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                            handler.handle(documentSnapshot.getData());
-                        }
-                    }
+
+
+//        .addOnCompleteListener(
+//            new OnCompleteListener<QuerySnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                    Log.e("TAWAZZ", "----------------------------------------------------------------------");
+//                    if (task.isSuccessful()) {
+//                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+//                            handler.handle(documentSnapshot.getData());
+//                        }
+//                    }
 //                    isEnd.set(true);
-                }
-            });
+//                }
+//            });
 
 //        try {
 //            new ConditionalWaiter(new Condition() {
@@ -60,6 +72,6 @@ public class ReadableDatabase {
 //        } catch (FailedWaitingForConditionException e) {
 //            e.printStackTrace();
 //        }
-    }
+//    }
 
 }

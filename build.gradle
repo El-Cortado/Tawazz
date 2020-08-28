@@ -17,7 +17,8 @@ buildscript {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.1"
 
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
-//        classpath 'com.google.api-client:google-api-client:1.30.10'
+
+        //        classpath 'com.google.api-client:google-api-client:1.30.10'
 //        classpath 'com.google.api-client:google-api-client:1.23.0'
 
 //        compile 'com.google.api-client:google-api-client:1.23.0'

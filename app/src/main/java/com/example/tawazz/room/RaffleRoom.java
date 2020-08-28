@@ -16,6 +16,7 @@ import com.example.tawazz.R;
 import com.example.tawazz.consts.Constants;
 import com.example.tawazz.database.Database;
 import com.example.tawazz.database.ReadableDatabase;
+import com.example.tawazz.database.ReadableDatabaseSingleton;
 import com.example.tawazz.database.UsersDatabaseUtils;
 import com.example.tawazz.databinding.RaffleRoomBinding;
 import com.example.tawazz.icon.Icon;
@@ -41,7 +42,6 @@ import com.example.tawazz.user.UserRepository;
 import com.example.tawazz.utils.Notifier;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.UUID;
 
@@ -97,8 +97,7 @@ public class RaffleRoom extends Fragment {
                     new NewUserListener(newUserHandler)
             );
 
-            ReadableDatabase readableDatabase = new ReadableDatabase(FirebaseFirestore.getInstance());
-            UserRepository userRepository = new UserRepository(database, readableDatabase, newUserHandler, usersDatabaseUtils);
+            UserRepository userRepository = new UserRepository(database, ReadableDatabaseSingleton.getInstance(), newUserHandler, usersDatabaseUtils);
 
             initAlreadySignedUsers(roomUuid, userRepository);
 

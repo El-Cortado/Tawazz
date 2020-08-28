@@ -16,22 +16,37 @@ import com.example.tawazz.utils.exceptions.SupplyingException;
 import com.example.tawazz.utils.supplier.ThrowingSupplier;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
 
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class JoinRoomToRaffleRoomSupplier implements ThrowingSupplier<NavDirections> {
     private JoinRoomBinding mJoinRoomBinding;
+    private final ReadableDatabase mReadableDatabase;
 
-    public JoinRoomToRaffleRoomSupplier(JoinRoomBinding mJoinRoomBinding) {
+    public JoinRoomToRaffleRoomSupplier(JoinRoomBinding mJoinRoomBinding, ReadableDatabase readableDatabase) {
         this.mJoinRoomBinding = mJoinRoomBinding;
+        this.mReadableDatabase = readableDatabase;
     }
 
     @Override
     public NavDirections supply() throws SupplyingException {
         try {
             UUID uuid = UUID.fromString(mJoinRoomBinding.roomIdInput.getText().toString());
+            ApiFuture<QuerySnapshot> querySnapshot = mReadableDatabase.getCollection(Constants.ROOMS_DATABASE_KEY).whereEqualTo(Constants.ROOM_ID_READABLE_DATABASE_KEY, uuid.toString()).get();
+            try {
+                if(querySnapshot.get().getDocuments().isEmpty()) {
+                    throw new Exception();
+                }
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             final AtomicBoolean flag = new AtomicBoolean(false);
 
