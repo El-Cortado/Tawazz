@@ -1,0 +1,22 @@
+<LinearLayout
+    android:id="@+id/menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+
+    <Button
+    android:id="@+id/joinRoomButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Join Room"
+    android:textSize="20sp" />
+
+    <Button
+    android:id="@+id/createRoomButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:text="Create Room"
+    android:textSize="20sp" />
+</LinearLayout>

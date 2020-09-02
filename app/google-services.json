@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "993732245530",
+    "firebase_url": "https://tawazz-897a0.firebaseio.com",
+    "project_id": "tawazz-897a0",
+    "storage_bucket": "tawazz-897a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993732245530:android:dc99623589b0f229a1b9a3",
+        "android_client_info": {
+          "package_name": "com.example.tawazz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "993732245530-cnnuffu9395siab6vr5cdv4dim3lg1n7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdbDrUDgJUt5KjV0uQj2e3s_BGpW7Z53k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "993732245530-cnnuffu9395siab6vr5cdv4dim3lg1n7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

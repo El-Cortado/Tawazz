@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/menuFragment">
+
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.tawazz.menu.MenuFragment"
+        android:label="MenuFragment" >
+        <action
+            android:id="@+id/action_menuFragment_to_joinRoom"
+            android:name="JoinRoomAction"
+            app:destination="@id/joinRoom"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" >
+        </action>
+
+        <action
+            android:id="@+id/action_menuFragment_to_newRoomCreation"
+            android:name="CreateRoomAction"
+            app:destination="@id/newRoomCreation"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/joinRoom"
+        android:name="com.example.tawazz.room.JoinRoom"
+        android:label="JoinRoom" >
+        <action
+            android:id="@+id/action_joinRoom_to_menuFragment"
+            app:destination="@id/menuFragment" />
+        <action
+            android:id="@+id/action_joinRoom_to_raffleRoom"
+            app:destination="@id/raffleRoom"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/newRoomCreation"
+        android:name="com.example.tawazz.room.NewRoomCreation"
+        android:label="NewRoomCreation" >
+        <action
+            android:id="@+id/action_newRoomCreation_to_menuFragment"
+            app:destination="@id/menuFragment" />
+        <action
+            android:name="createNewRoomAction"
+            android:id="@+id/action_newRoomCreation_to_raffleRoom"
+            app:destination="@id/raffleRoom">
+            <argument
+                android:name="room_id"
+                app:argType="string"
+            />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/raffleRoom"
+        android:name="com.example.tawazz.room.RaffleRoom"
+        android:label="RaffleRoom">
+
+        <argument
+            android:name="room_id"
+            app:argType="string"
+            />
+    </fragment>
+
+</navigation>
