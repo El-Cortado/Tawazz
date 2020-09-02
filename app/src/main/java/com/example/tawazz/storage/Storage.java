@@ -20,15 +20,13 @@ public class Storage {
         this.mTaskCompletedWaiterFactory = taskCompletedWaiterFactory;
     }
 
-    public UploadTask store(Uri srcDir, Uri destDir) throws FailedStoreException {
-        StorageReference userIconStorageRef = mStorageReference.child(destDir.getPath());
-        return userIconStorageRef.putFile(srcDir);
-    }
-
-    public void safeStore(Uri srcDir, Uri destDir) throws FailedStoreException {
+    public StorageReference safeStore(Uri srcDir, Uri destDir) throws FailedStoreException {
         try {
-            UploadTask uploadTask = store(srcDir, destDir);
+            StorageReference userIconStorageRef = mStorageReference.child(destDir.getPath());
+            UploadTask uploadTask = userIconStorageRef.putFile(srcDir);
             mTaskCompletedWaiterFactory.create(uploadTask).waitTill();
+
+            return userIconStorageRef;
         } catch (FailedWaitingForConditionException e) {
             throw new FailedStoreException(e);
         }

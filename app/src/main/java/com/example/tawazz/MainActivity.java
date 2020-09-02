@@ -20,4 +20,13 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // call the callback
+    }
 }
+
+// todo: lock application from rotating
+// todo: notify when application want to be destroyed

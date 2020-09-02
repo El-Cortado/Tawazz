@@ -1,20 +1,13 @@
 package com.example.tawazz.database;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QuerySnapshot;
 
-
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ReadableDatabase {
     private Firestore mFirebaseFirestore;
@@ -27,8 +20,13 @@ public class ReadableDatabase {
         return mFirebaseFirestore.collection(collectionName);
     }
 
-    public void add(String collectionTarget, Object data) {
-        mFirebaseFirestore.collection(collectionTarget).add(data);
+    public DocumentReference add(String collectionTarget, Object data) throws AddingToFirestoreException {
+        try {
+            return mFirebaseFirestore.collection(collectionTarget).add(data).get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            throw new AddingToFirestoreException(e);
+        }
     }
 
     public void handleAllThatEqualTo(String collectionName, final String field, Object equalTo, final DocHandler handler) {
@@ -37,9 +35,7 @@ public class ReadableDatabase {
             for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
                 handler.handle(document.getData());
             }
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
     }

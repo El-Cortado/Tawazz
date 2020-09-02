@@ -19,9 +19,11 @@ public class Database {
         this.mDatabaseReference = databaseReference;
     }
 
-    public void addToDatabase(Object value, String ...path) {
+    public DatabaseReference addToDatabase(Object value, String ...path) {
         DatabaseReference ref = getPathRef(path);
         ref.setValue(value);
+
+        return ref;
     }
 
     public void addOnChangeTrigger(

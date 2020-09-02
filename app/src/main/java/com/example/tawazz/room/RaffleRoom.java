@@ -8,14 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.tawazz.R;
 import com.example.tawazz.consts.Constants;
+import com.example.tawazz.database.AddingToFirestoreException;
 import com.example.tawazz.database.Database;
-import com.example.tawazz.database.ReadableDatabase;
 import com.example.tawazz.database.ReadableDatabaseSingleton;
 import com.example.tawazz.database.UsersDatabaseUtils;
 import com.example.tawazz.databinding.RaffleRoomBinding;
@@ -58,6 +59,7 @@ public class RaffleRoom extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         try {
             View userIconLayout = mBinding.userIconLayout;
             ImageView userIconImage = mBinding.albertEinstein;
@@ -69,7 +71,7 @@ public class RaffleRoom extends Fragment {
 
             // todo: getting a picture from the user (now this is a static pic)
             Uri iconUri = Uri.parse("android.resource://com.example.tawazz/drawable/albert_einstein");
-            User user = new User(roomUuid, new Icon(iconUri));
+            final User user = new User(roomUuid, new Icon(iconUri));
             user.generateId();
             Notifier<TouchStatus> statusNotifier = new Notifier<>();
 
@@ -78,7 +80,7 @@ public class RaffleRoom extends Fragment {
 
             Storage storage = StorageSingleton.getInstance();
             IconsDatabaseUtils iconsDatabaseUtils = new IconsDatabaseUtils();
-            IconRepository iconRepository = new IconRepository(iconsDatabaseUtils, storage);
+            final IconRepository iconRepository = new IconRepository(iconsDatabaseUtils, storage);
             iconRepository.addUserIcon(user);
 
             UsersDatabaseUtils usersDatabaseUtils = new UsersDatabaseUtils();
@@ -97,7 +99,7 @@ public class RaffleRoom extends Fragment {
                     new NewUserListener(newUserHandler)
             );
 
-            UserRepository userRepository = new UserRepository(database, ReadableDatabaseSingleton.getInstance(), newUserHandler, usersDatabaseUtils);
+            final UserRepository userRepository = new UserRepository(database, ReadableDatabaseSingleton.getInstance(), newUserHandler, usersDatabaseUtils);
 
             initAlreadySignedUsers(roomUuid, userRepository);
 
@@ -111,8 +113,19 @@ public class RaffleRoom extends Fragment {
             TouchStatusHandler touchListenerHandler = new TouchStatusHandler(userIconImage, statusNotifier);
             userIconLayout.setOnTouchListener(new TouchListener(touchListenerHandler));
 
+            OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+                @Override
+                public void handleOnBackPressed() {
+                    userRepository.removeUser(user);
+                    iconRepository.removeUserIcon(user);
+                    remove();
+                    requireActivity().getOnBackPressedDispatcher().onBackPressed();
+                }
+            };
 
-        } catch (FailedUpdateUserIconException e) {
+            requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), onBackPressedCallback);
+
+        } catch (FailedUpdateUserIconException | AddingToFirestoreException e) {
             Log.e(Constants.TAWAZZ_LOG_TAG, "Failed Init Application", e);
         }
     }
