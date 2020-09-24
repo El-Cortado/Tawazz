@@ -1,7 +1,10 @@
 package com.example.tawazz.room;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,7 @@ import com.example.tawazz.databinding.RaffleRoomBinding;
 import com.example.tawazz.icon.Icon;
 import com.example.tawazz.icon.IconRepository;
 import com.example.tawazz.icon.IconsDatabaseUtils;
+import com.example.tawazz.icon.MyIconSingleton;
 import com.example.tawazz.icon.exceptions.FailedUpdateUserIconException;
 import com.example.tawazz.icon.gui.RemoteIconBuilder;
 import com.example.tawazz.storage.Storage;
@@ -64,14 +68,14 @@ public class RaffleRoom extends Fragment {
             View userIconLayout = mBinding.userIconLayout;
             ImageView userIconImage = mBinding.albertEinstein;
 
-            // todo: all the user uuid will be saved in the db
             String roomUuidString = RaffleRoomArgs.fromBundle(getArguments()).getRoomId();
 //            String roomUuidString = "0633c074-a68a-4cdd-9864-f9b1e761e304";
             UUID roomUuid = UUID.fromString(roomUuidString);
 
-            // todo: getting a picture from the user (now this is a static pic)
-            Uri iconUri = Uri.parse("android.resource://com.example.tawazz/drawable/albert_einstein");
-            final User user = new User(roomUuid, new Icon(iconUri));
+//            // todo: getting a picture from the user (now this is a static pic)
+//            Uri iconUri = Uri.parse("android.resource://com.example.tawazz/drawable/albert_einstein");
+
+            final User user = new User(roomUuid, MyIconSingleton.getInstance());
             user.generateId();
             Notifier<TouchStatus> statusNotifier = new Notifier<>();
 
@@ -107,7 +111,11 @@ public class RaffleRoom extends Fragment {
 
             TouchUpdater touchUpdater = new TouchUpdater(userRepository);
             statusNotifier.register(new TouchStatusObserver(user, touchUpdater));
-            userIconImage.setImageResource(R.drawable.albert_einstein);
+
+
+//            Bitmap userIconBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.albert_einstein);
+
+            userIconImage.setImageURI(MyIconSingleton.getInstance().getIconPath());
             userIconImage.setVisibility(View.GONE);
 
             TouchStatusHandler touchListenerHandler = new TouchStatusHandler(userIconImage, statusNotifier);

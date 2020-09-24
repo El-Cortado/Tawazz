@@ -13,4 +13,6 @@ public class Constants {
     public static final String USER_ID_READABLE_DATABASE_KEY = "user_id";
     public static final String ROOM_ID_READABLE_DATABASE_KEY = "room_id";
 
+
+    public static final int SELECT_PICTURE = 1;
 }

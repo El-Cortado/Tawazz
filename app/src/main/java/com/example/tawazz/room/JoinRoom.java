@@ -1,12 +1,12 @@
 package com.example.tawazz.room;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import com.example.tawazz.database.ReadableDatabase;
 import com.example.tawazz.database.ReadableDatabaseSingleton;
 import com.example.tawazz.databinding.JoinRoomBinding;
+import com.example.tawazz.icon.ChooseIconHandler;
 import com.example.tawazz.utils.gui.NavigationOnClickListener;
 
 public class JoinRoom extends Fragment {
@@ -33,6 +34,7 @@ public class JoinRoom extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Button buttonJoinGroup = mBinding.joinButton;
+        Button buttonChooseIcon = mBinding.chooseIcon;
 
         NavController navController = Navigation.findNavController(view);
 
@@ -40,6 +42,8 @@ public class JoinRoom extends Fragment {
         JoinRoomToRaffleRoomSupplier joinRoomToRaffleRoomSupplier = new JoinRoomToRaffleRoomSupplier(mBinding, readableDatabase);
 
         buttonJoinGroup.setOnClickListener(new NavigationOnClickListener(navController, joinRoomToRaffleRoomSupplier));
+        buttonChooseIcon.setOnClickListener(new ChooseIconHandler());
 
     }
+
 }
